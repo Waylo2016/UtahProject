@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utah Project API", "Utah Project API\Utah Project API.csproj", "{DCF5A97F-7D7F-4F4A-9922-5FC928F21260}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8F7009F-C288-45E7-B02D-AE22B2ACEF82}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCF5A97F-7D7F-4F4A-9922-5FC928F21260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCF5A97F-7D7F-4F4A-9922-5FC928F21260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCF5A97F-7D7F-4F4A-9922-5FC928F21260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCF5A97F-7D7F-4F4A-9922-5FC928F21260}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
