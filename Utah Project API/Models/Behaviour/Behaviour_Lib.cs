@@ -1,7 +1,10 @@
-﻿namespace Utah_Project_API.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Utah_Project_API.Models;
 
 public class Behaviour_Lib
 {
+    
     public string behaviourCode { get; set; }
     
     public string behaviourName { get; set; }

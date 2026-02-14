@@ -14,7 +14,7 @@ public class Nesting_Mutation
     public string mutationCode { get; set; }
     
     [JsonIgnore]
-    public Dino_Mutation Mutation { get; set; }
+    public Mutation_Lib Mutation { get; set; }
     
     public float mutationChance { get; set; }
 }

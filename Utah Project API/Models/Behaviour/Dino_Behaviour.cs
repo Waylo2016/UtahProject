@@ -13,5 +13,5 @@ public class Dino_Behaviour
     public string behaviourCode { get; set; }
     
     [JsonIgnore]
-    public ICollection<Behaviour_Lib> behaviour { get; set; } = new List<Behaviour_Lib>();
+    public Behaviour_Lib Behaviour { get; set; }
 }
