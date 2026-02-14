@@ -10,7 +10,7 @@ public class Program
 
         var sql = builder.AddSqlServer("sql");
         
-        var db = sql.AddDatabase("sqldb");
+        var db = sql.AddDatabase("UtahDB");
 
         builder.AddProject<Utah_Project_API>("api")
             .WithReference(db);

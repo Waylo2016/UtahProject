@@ -11,10 +11,10 @@ public class Nesting_Mutation
     
     public string mutationName { get; set; }
     
-    public string traitCode { get; set; }
+    public string mutationCode { get; set; }
     
     [JsonIgnore]
-    public Dino_trait trait { get; set; }
+    public Dino_Mutation Mutation { get; set; }
     
     public float mutationChance { get; set; }
 }

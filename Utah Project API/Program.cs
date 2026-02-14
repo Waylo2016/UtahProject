@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
+
 namespace Utah_Project_API;
 
 public class Program

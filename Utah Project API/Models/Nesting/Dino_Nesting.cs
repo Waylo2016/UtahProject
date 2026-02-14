@@ -2,15 +2,15 @@
 
 namespace Utah_Project_API.Models;
 
-public class Dino_behaviour
+public class Dino_Nesting
 {
     public int dinoCode { get; set; }
     
     [JsonIgnore]
-    public Dinosaur dinosaur { get; set; }
+    public Dinosaur.Dinosaur Dinosaur { get; set; }
     
-    public string behaviourCode { get; set; }
+    public int nestingId { get; set; }
     
     [JsonIgnore]
-    public Behaviour_lib behaviour { get; set; }
+    public Nesting_Lib nesting { get; set; }
 }
