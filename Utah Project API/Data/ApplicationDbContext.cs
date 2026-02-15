@@ -25,111 +25,111 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(builder);
         
         builder.Entity<Dinosaur>()
-            .HasKey(d => d.dinoCode);
+            .HasKey(d => d.DinoCode);
         
         
         // Dinosaur - Mutation (Many-to-Many via Dino_Mutation)
         builder.Entity<Dino_Mutation>()
-            .HasKey(dm => new { dm.dinoCode, dm.mutationCode });
+            .HasKey(dm => new { dm.DinoCode, dm.MutationCode });
         
         builder.Entity<Mutation_Lib>()
-            .HasKey(ml => ml.mutationCode);
+            .HasKey(ml => ml.MutationCode);
 
         builder.Entity<Dino_Mutation>()
-            .HasOne(dm => dm.dinosaur)
-            .WithMany(d => d.dinoMutations)
-            .HasForeignKey(dm => dm.dinoCode);
+            .HasOne(dm => dm.Dinosaur)
+            .WithMany(d => d.DinoMutations)
+            .HasForeignKey(dm => dm.DinoCode);
 
         // Dinosaur - Relationship (One-to-Many via Dino_Relationship)
         builder.Entity<Dino_Relationship>()
-            .HasKey(dr => new { dr.dinocode, dr.targetDinocode, dr.relationTypeId });
+            .HasKey(dr => new { dinocode = dr.Dinocode, targetDinocode = dr.TargetDinocode, relationTypeId = dr.RelationTypeId });
 
         builder.Entity<Dino_Relationship>()
             .HasOne(dr => dr.Dino)
-            .WithMany(d => d.dinoRelationships)
-            .HasForeignKey(dr => dr.dinocode)
+            .WithMany(d => d.DinoRelationships)
+            .HasForeignKey(dr => dr.Dinocode)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Dino_Relationship>()
             .HasOne(dr => dr.TargetDino)
             .WithMany() // One-to-Many: Target doesn't have a back-collection
-            .HasForeignKey(dr => dr.targetDinocode)
+            .HasForeignKey(dr => dr.TargetDinocode)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Nesting - Parents and Offspring
         builder.Entity<Nesting_Lib>()
-            .HasKey(n => n.nestingId);
+            .HasKey(n => n.NestingId);
         
         builder.Entity<Nesting_Lib>()
-            .HasOne(n => n.parent1)
-            .WithMany(d => d.nestingsAsParent1)
-            .HasForeignKey(n => n.parent1Id)
+            .HasOne(n => n.Parent1)
+            .WithMany(d => d.NestingsAsParent1)
+            .HasForeignKey(n => n.Parent1Id)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Nesting_Lib>()
-            .HasOne(n => n.parent2)
-            .WithMany(d => d.nestingsAsParent2)
-            .HasForeignKey(n => n.parent2Id)
+            .HasOne(n => n.Parent2)
+            .WithMany(d => d.NestingsAsParent2)
+            .HasForeignKey(n => n.Parent2Id)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Dinosaur>()
-            .HasOne(d => d.nest)
-            .WithMany(n => n.offsprings)
-            .HasForeignKey(d => d.nestId)
+            .HasOne(d => d.Nest)
+            .WithMany(n => n.Offsprings)
+            .HasForeignKey(d => d.NestId)
             .OnDelete(DeleteBehavior.Restrict);
             
         // Dino - Behaviour
         builder.Entity<Dino_Behaviour>()
-            .HasKey(db => new { db.dinoCode, db.behaviourCode });
+            .HasKey(db => new { db.DinoCode, db.BehaviourCode });
         
         builder.Entity<Behaviour_Lib>()
-            .HasKey(bl => bl.behaviourCode);
+            .HasKey(bl => bl.BehaviourCode);
 
         builder.Entity<Dino_Behaviour>()
-            .HasOne(db => db.dinosaur)
-            .WithMany(d => d.dinoBehaviours)
-            .HasForeignKey(db => db.dinoCode);
+            .HasOne(db => db.Dinosaur)
+            .WithMany(d => d.DinoBehaviours)
+            .HasForeignKey(db => db.DinoCode);
 
         builder.Entity<Dino_Behaviour>()
             .HasOne(db => db.Behaviour)
             .WithMany() 
-            .HasForeignKey(db => db.behaviourCode);
+            .HasForeignKey(db => db.BehaviourCode);
 
         // Dino - Nesting
         builder.Entity<Dino_Nesting>()
-            .HasKey(dn => new { dn.dinoCode, dn.nestingId });
+            .HasKey(dn => new { dn.DinoCode, dn.NestingId });
 
         builder.Entity<Dino_Nesting>()
             .HasOne(dn => dn.Dinosaur)
             .WithMany()
-            .HasForeignKey(dn => dn.dinoCode);
+            .HasForeignKey(dn => dn.DinoCode);
 
         builder.Entity<Dino_Nesting>()
-            .HasOne(dn => dn.nesting)
+            .HasOne(dn => dn.Nesting)
             .WithMany()
-            .HasForeignKey(dn => dn.nestingId);
+            .HasForeignKey(dn => dn.NestingId);
 
         // Nesting - Mutation
         builder.Entity<Nesting_Mutation>()
-            .HasKey(nm => new { nm.nestingId, nm.mutationCode });
+            .HasKey(nm => new { nestingId = nm.NestingId, nm.MutationCode });
 
         builder.Entity<Nesting_Mutation>()
-            .HasOne(nm => nm.nesting)
+            .HasOne(nm => nm.Nesting)
             .WithMany()
-            .HasForeignKey(nm => nm.nestingId);
+            .HasForeignKey(nm => nm.NestingId);
 
         builder.Entity<Nesting_Mutation>()
             .HasOne(nm => nm.Mutation)
             .WithMany()
-            .HasForeignKey(nm => nm.mutationCode);
+            .HasForeignKey(nm => nm.MutationCode);
 
         // Species
         builder.Entity<Species>()
-            .HasKey(s => s.speciesId);
+            .HasKey(s => s.SpeciesId);
 
         // Relation_Type
         builder.Entity<Relation_Type>()
-            .HasKey(rt => rt.relationTypeId);
+            .HasKey(rt => rt.Id);
     }
     
 }

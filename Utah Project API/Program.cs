@@ -8,6 +8,7 @@ using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
 using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi;
 using Utah_Project_API.Data;
 using Utah_Project_API.Filters;
@@ -22,7 +23,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         // Add EFCore with SQL server
-        builder.AddSqlServerDbContext<ApplicationDbContext>("UtahDB");
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("UtahDB")
+            ?? throw new InvalidOperationException("Connection string 'UtahDB' not found.")));
         
         // Add services to the container.
         builder.Services.AddAuthorization();

@@ -58,3 +58,6 @@ nunit-*.xml
 .idea/.idea.Utah Project/.idea/indexLayout.xml
 .idea/.idea.Utah Project/.idea/encodings.xml
 >>>>>>> Stashed changes
+.idea/.idea.Utah Project/.idea/dataSources.xml
+/Utah Project.AppHost/..Data/sql_data
+/Data/sql_data

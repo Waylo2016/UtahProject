@@ -8,18 +8,18 @@ public class Mutation_Lib
     /// <summary>
     /// Represents the unique identifier for a mutation within the mutation library.
     /// </summary>
-    public string mutationCode { get; set; }
+    public string MutationCode { get; set; }
     
     /// <summary>
     /// name of the mutation
     /// </summary>
-    public string mutationName { get; set; }
+    public string MutationName { get; set; }
         
     /// <summary>
     /// description of the mutation
     /// </summary>
-    public string mutationDescription { get; set; }
+    public string MutationDescription { get; set; }
     
     [JsonIgnore]
-    public ICollection<Dino_Mutation> dino_Mutations { get; set; } = new List<Dino_Mutation>();
+    public ICollection<Dino_Mutation> DinoMutations { get; set; } = new List<Dino_Mutation>();
 }
