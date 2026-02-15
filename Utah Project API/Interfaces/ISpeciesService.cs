@@ -4,7 +4,7 @@ using Utah_Project_API.Models;
 
 namespace Utah_Project_API.Interfaces;
 
-public interface ISpecies
+public interface ISpeciesService
 {
     /// <summary>
     /// Retrieves a list of all species.

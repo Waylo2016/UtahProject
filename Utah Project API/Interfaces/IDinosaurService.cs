@@ -4,7 +4,7 @@ using Utah_Project_API.Models.Dinosaur;
 
 namespace Utah_Project_API.Interfaces;
 
-public interface IDinosaur
+public interface IDinosaurService
 {
     /// <summary>
     /// Retrieves a list of all dinosaurs.

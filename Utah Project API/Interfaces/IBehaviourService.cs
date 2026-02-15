@@ -5,7 +5,7 @@ using Utah_Project_API.Models;
 
 namespace Utah_Project_API.Interfaces;
 
-public interface IBehaviour
+public interface IBehaviourService
 {
     /// <summary>
     /// Gets all behaviours.

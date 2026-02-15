@@ -55,7 +55,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v2", new OpenApiInfo { Title = "UtahProject", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "UtahProject", Version = "v1" });
 
             string xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -72,7 +72,6 @@ public class Program
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "UtahProject v1");
-                c.SwaggerEndpoint("http://localhost:5000/swagger/index.html","Data API Builder"); 
             });
              
         }

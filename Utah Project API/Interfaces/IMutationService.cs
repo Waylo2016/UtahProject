@@ -4,7 +4,7 @@ using Utah_Project_API.Models;
 
 namespace Utah_Project_API.Interfaces;
 
-public interface IMutation
+public interface IMutationService
 {
     
     /// <summary>
