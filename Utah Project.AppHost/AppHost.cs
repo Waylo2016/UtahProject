@@ -23,15 +23,6 @@ public class Program
             .WaitFor(db)
             .WithReference(db);
 
-        builder.AddContainer("data-api", "mcr.microsoft.com/azure-databases/data-api-builder")
-            .WithBindMount("dab-config.json", "/App/dab-config.json", isReadOnly: true)
-            .WithArgs("start", "--ConfigFileName", "/App/dab-config.json")
-            .WithHttpEndpoint(targetPort: 5000, port:5000, name: "http")
-            .WithEnvironment("DATABASE_CONNECTION_STRING", db)
-            .WithExternalHttpEndpoints()
-            .WaitFor(db)
-            .WaitFor(api);
-
         builder.Build().Run();
     }
 }
