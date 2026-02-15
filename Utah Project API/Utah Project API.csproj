@@ -41,7 +41,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Controllers\v1\" />
+      <Folder Include="DTO\Dinosaur\" />
+      <Folder Include="DTO\Mutation\" />
+      <Folder Include="DTO\Nesting\" />
+      <Folder Include="DTO\Species\" />
       <Folder Include="Migrations\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

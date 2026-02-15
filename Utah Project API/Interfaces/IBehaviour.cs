@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Utah_Project_API.DTO.Behaviour;
 using Utah_Project_API.Models;
 
 namespace Utah_Project_API.Interfaces;
@@ -24,7 +25,7 @@ public interface IBehaviour
     /// </summary>
     /// <param name="behaviourData">data used to create a behaviour</param>
     /// <returns>The created behaviour.</returns>
-    Task<Behaviour_Lib> CreateBehaviour(BehaviourDto behaviourData);
+    Task<Behaviour_Lib> CreateBehaviour(BehaviourCreateDto behaviourData);
     
     /// <summary>
     /// Updates an existing behaviour.
@@ -32,7 +33,7 @@ public interface IBehaviour
     /// <param name="behaviourId">numerical id of a behaviour</param>
     /// <param name="behaviourData">data used to update a behaviour</param>
     /// <returns>the updated behaviour</returns>
-    Task<Behaviour_Lib> UpdateBehaviour(int behaviourId, BehaviourDto behaviourData);
+    Task<Behaviour_Lib> UpdateBehaviour(int behaviourId, BehaviourUpdateDto behaviourData);
     
     /// <summary>
     /// Deletes an existing behaviour.
