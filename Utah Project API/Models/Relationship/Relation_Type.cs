@@ -4,7 +4,7 @@ namespace Utah_Project_API.Models;
 
 public class Relation_Type
 {
-    public int relationTypeId { get; set; }
+    public int Id { get; set; }
     
     public RelationTypes RelationTypes { get; set; }
 }

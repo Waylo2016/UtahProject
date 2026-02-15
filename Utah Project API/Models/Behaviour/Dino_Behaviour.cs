@@ -5,12 +5,12 @@ namespace Utah_Project_API.Models;
 
 public class Dino_Behaviour
 {
-    public int dinoCode { get; set; }
+    public int DinoCode { get; set; }
     
     [JsonIgnore]
-    public Dinosaur.Dinosaur dinosaur { get; set; }
+    public Dinosaur.Dinosaur Dinosaur { get; set; }
     
-    public string behaviourCode { get; set; }
+    public string BehaviourCode { get; set; }
     
     [JsonIgnore]
     public Behaviour_Lib Behaviour { get; set; }

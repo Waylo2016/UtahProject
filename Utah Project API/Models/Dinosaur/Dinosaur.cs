@@ -5,41 +5,41 @@ namespace Utah_Project_API.Models.Dinosaur;
 
 public class Dinosaur
 {
-    public int dinoCode { get; set; }
+    public int DinoCode { get; set; }
     
-    public required string userId { get; set; }
-    
-    [JsonIgnore]
-    public User? user { get; set; }
-    
-    public string dinoName { get; set; }
-    
-    public string color { get; set; }
-    
-    public int speciesId { get; set; }
+    public required string UserId { get; set; }
     
     [JsonIgnore]
-    public Species species { get; set; }
+    public User? User { get; set; }
+    
+    public string DinoName { get; set; }
+    
+    public string Color { get; set; }
+    
+    public int SpeciesId { get; set; }
     
     [JsonIgnore]
-    public ICollection<Dino_Mutation> dinoMutations { get; set; } = new List<Dino_Mutation>();
+    public Species Species { get; set; }
     
     [JsonIgnore]
-    public ICollection<Dino_Relationship> dinoRelationships { get; set; } = new List<Dino_Relationship>();
+    public ICollection<Dino_Mutation> DinoMutations { get; set; } = new List<Dino_Mutation>();
     
     [JsonIgnore]
-    public ICollection<Dino_Behaviour> dinoBehaviours { get; set; } = new List<Dino_Behaviour>();
+    public ICollection<Dino_Relationship> DinoRelationships { get; set; } = new List<Dino_Relationship>();
+    
+    [JsonIgnore]
+    public ICollection<Dino_Behaviour> DinoBehaviours { get; set; } = new List<Dino_Behaviour>();
 
     [JsonIgnore]
-    public ICollection<Nesting_Lib> nestingsAsParent1 { get; set; } = new List<Nesting_Lib>();
+    public ICollection<Nesting_Lib> NestingsAsParent1 { get; set; } = new List<Nesting_Lib>();
 
     [JsonIgnore]
-    public ICollection<Nesting_Lib> nestingsAsParent2 { get; set; } = new List<Nesting_Lib>();
+    public ICollection<Nesting_Lib> NestingsAsParent2 { get; set; } = new List<Nesting_Lib>();
 
     [JsonIgnore]
-    public int? nestId { get; set; }
+    public int? NestId { get; set; }
 
     [JsonIgnore]
-    public Nesting_Lib? nest { get; set; }
+    public Nesting_Lib? Nest { get; set; }
     
 }

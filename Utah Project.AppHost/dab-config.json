@@ -1,0 +1,313 @@
+﻿{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.7.81/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('DATABASE_CONNECTION_STRING')",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [
+          "*"
+        ],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "Behaviours": {
+      "source": "Behaviours",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "name": "BehaviourCode",
+          "description": "Primary key",
+          "primary-key": true
+        }
+      ]
+    },
+    "Nestings": {
+      "source": "Nestings",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "Dinosaurs": {
+      "source": "Dinosaurs",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "Species": {
+      "source": "Species",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "Mutations": {
+      "source": "Mutations",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "name": "MutationCode",
+          "description": "Primary key",
+          "primary-key": true
+        }
+      ]
+    },
+    "DinoBehaviours": {
+      "source": "DinoBehaviours",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "Dinosaur": {
+          "cardinality": "one",
+          "target.entity": "Dinosaurs",
+          "source.fields": [
+            "DinoCode"
+          ],
+          "target.fields": [
+            "DinoCode"
+          ]
+        },
+        "Behaviour": {
+          "cardinality": "one",
+          "target.entity": "Behaviours",
+          "source.fields": [
+            "BehaviourCode"
+          ],
+          "target.fields": [
+            "BehaviourCode"
+          ]
+        }
+      }
+    },
+    "DinoMutations": {
+      "source": "DinoMutations",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "Dinosaur": {
+          "cardinality": "one",
+          "target.entity": "Dinosaurs",
+          "source.fields": [
+            "DinoCode"
+          ],
+          "target.fields": [
+            "DinoCode"
+          ]
+        },
+        "Mutation": {
+          "cardinality": "one",
+          "target.entity": "Mutations",
+          "source.fields": [
+            "MutationCode"
+          ],
+          "target.fields": [
+            "MutationCode"
+          ]
+        }
+      }
+    },
+    "DinoNestings": {
+      "source": "DinoNestings",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "Dinosaur": {
+          "cardinality": "one",
+          "target.entity": "Dinosaurs",
+          "source.fields": [
+            "DinoCode"
+          ],
+          "target.fields": [
+            "DinoCode"
+          ]
+        },
+        "Nesting": {
+          "cardinality": "one",
+          "target.entity": "Nestings",
+          "source.fields": [
+            "NestingId"
+          ],
+          "target.fields": [
+            "NestingId"
+          ]
+        }
+      }
+    },
+    "NestingMutations": {
+      "source": "NestingMutations",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "Nesting": {
+          "cardinality": "one",
+          "target.entity": "Nestings",
+          "source.fields": [
+            "NestingId"
+          ],
+          "target.fields": [
+            "NestingId"
+          ]
+        },
+        "Mutation": {
+          "cardinality": "one",
+          "target.entity": "Mutations",
+          "source.fields": [
+            "MutationCode"
+          ],
+          "target.fields": [
+            "MutationCode"
+          ]
+        }
+      }
+    },
+    "DinoRelationships": {
+      "source": "DinoRelationships",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ],
+      "relationships": {
+        "Dinosaur": {
+          "cardinality": "one",
+          "target.entity": "Dinosaurs",
+          "source.fields": [
+            "DinoCode"
+          ],
+          "target.fields": [
+            "DinoCode"
+          ]
+        },
+        "TargetDinosaur": {
+          "cardinality": "one",
+          "target.entity": "Dinosaurs",
+          "source.fields": [
+            "TargetDinoCode"
+          ],
+          "target.fields": [
+            "DinoCode"
+          ]
+        },
+        "RelationType": {
+          "cardinality": "one",
+          "target.entity": "RelationTypes",
+          "source.fields": [
+            "RelationTypeId"
+          ],
+          "target.fields": [
+            "Id"
+          ]
+        }
+      }
+    },
+    "RelationTypes": {
+      "source": "RelationTypes",
+      "rest": true,
+      "graphql": true,
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "*"
+          ]
+        }
+      ]
+    }
+  }
+}
