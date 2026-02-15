@@ -63,3 +63,4 @@ nunit-*.xml
 /Data/sql_data
 /data-api-builder
 /.idea
+/frontend/.idea/
