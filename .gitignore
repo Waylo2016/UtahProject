@@ -62,3 +62,4 @@ nunit-*.xml
 /Utah Project.AppHost/..Data/sql_data
 /Data/sql_data
 /data-api-builder
+/.idea

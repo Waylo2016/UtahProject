@@ -33,6 +33,9 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         
+        // add Aspire ServiceDefaults
+        builder.AddServiceDefaults();
+        
         // Set-up versioning
         builder.Services.AddApiVersioning(options =>
         {
@@ -66,10 +69,18 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => {c.SwaggerEndpoint("/swagger/v1/swagger.json", "UtahProject v1");});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UtahProject v1");
+                c.SwaggerEndpoint("http://localhost:5000/swagger/index.html","Data API Builder"); 
+            });
+             
         }
 
         app.UseHttpsRedirection();
+        
+        //map aspire service defaults endpoints
+        app.MapDefaultEndpoints();
 
         app.UseAuthorization();
 
