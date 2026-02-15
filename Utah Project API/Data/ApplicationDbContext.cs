@@ -11,7 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Dinosaur> Dinosaurs { get; set; }
     public DbSet<Species> Species { get; set; }
     public DbSet<Mutation_Lib> Mutations { get; set; }
-    public DbSet<Dino_Mutation> DinoTraits { get; set; }
+    public DbSet<Dino_Mutation> DinoMutations { get; set; }
     public DbSet<Behaviour_Lib> Behaviours { get; set; }
     public DbSet<Dino_Behaviour> DinoBehaviours { get; set; }
     public DbSet<Nesting_Lib> Nestings { get; set; }
@@ -42,18 +42,18 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         // Dinosaur - Relationship (One-to-Many via Dino_Relationship)
         builder.Entity<Dino_Relationship>()
-            .HasKey(dr => new { dinocode = dr.Dinocode, targetDinocode = dr.TargetDinocode, relationTypeId = dr.RelationTypeId });
+            .HasKey(dr => new { dr.DinoCode, dr.TargetDinoCode, dr.RelationTypeId });
 
         builder.Entity<Dino_Relationship>()
             .HasOne(dr => dr.Dino)
             .WithMany(d => d.DinoRelationships)
-            .HasForeignKey(dr => dr.Dinocode)
+            .HasForeignKey(dr => dr.DinoCode)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Dino_Relationship>()
             .HasOne(dr => dr.TargetDino)
             .WithMany() // One-to-Many: Target doesn't have a back-collection
-            .HasForeignKey(dr => dr.TargetDinocode)
+            .HasForeignKey(dr => dr.TargetDinoCode)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Nesting - Parents and Offspring

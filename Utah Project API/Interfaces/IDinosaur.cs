@@ -31,7 +31,7 @@ public interface IDinosaur
     /// </summary>
     /// <param name="dinosaurData">data used to create a Dinosaur</param>
     /// <returns>The created dinosaur.</returns>
-    Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData);
+    // Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData);
     
     /// <summary>
     /// updates an existing dinosaur.
@@ -39,7 +39,7 @@ public interface IDinosaur
     /// <param name="dinoCode">numerical code of a dinosaur</param>
     /// <param name="dinosaurData">data used to update a dinosaur</param>
     /// <returns>the updated dinosaur</returns>
-    Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData);
+    // Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData);
     
     /// <summary>
     /// deletes a dinosaur by its numerical code.
@@ -104,5 +104,5 @@ public interface IDinosaur
     /// </summary>
     /// <param name="childrenData">data used to create the children</param>
     /// <returns>the updated dinosaur with the created children</returns>
-    Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData); // ooh yeah they fucked!! they did the oinky sploinky!! the freaky deaky!! the dirty wirty!! the nasty pasty!! the funky monkey!! the dirty wirty!! the nasty pasty!!
+    //Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData); // ooh yeah they fucked!! they did the oinky sploinky!! the freaky deaky!! the dirty wirty!! the nasty pasty!! the funky monkey!! the dirty wirty!! the nasty pasty!!
 }

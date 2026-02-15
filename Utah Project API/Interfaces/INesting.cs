@@ -24,7 +24,7 @@ public interface INesting
     /// </summary>
     /// <param name="nestingData">data used to create a nesting</param>
     /// <returns>The created nesting.</returns>
-    Task<Nesting_Lib> CreateNesting(NestingDto nestingData);
+    // Task<Nesting_Lib> CreateNesting(NestingDto nestingData);
 
     /// <summary>
     /// updates an existing nesting.
@@ -32,7 +32,7 @@ public interface INesting
     /// <param name="nestingId">numerical id of a nesting</param>
     /// <param name="nestingData">data used to update a nesting</param>
     /// <returns>the updated nesting</returns>
-    Task<Nesting_Lib> UpdateNesting(int nestingId, NestingDto nestingData);
+    // Task<Nesting_Lib> UpdateNesting(int nestingId, NestingDto nestingData);
     
     /// <summary>
     /// deletes an existing nesting.

@@ -24,7 +24,7 @@ public interface ISpecies
     /// </summary>
     /// <param name="speciesData">data used to create a species</param>
     /// <returns>The created species.</returns>
-     Task<Species> CreateSpecies(SpeciesDto speciesData);
+    // Task<Species> CreateSpecies(SpeciesDto speciesData);
     
     /// <summary>
     /// updates an existing species.
@@ -32,7 +32,7 @@ public interface ISpecies
     /// <param name="speciesId">numerical id of a species</param>
     /// <param name="speciesData">data used to update a species</param>
     /// <returns>the updated species</returns>
-    Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
+    // Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
     
     /// <summary>
     /// deletes an existing species.

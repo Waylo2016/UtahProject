@@ -4,9 +4,9 @@ namespace Utah_Project_API.Models;
 
 public class Dino_Relationship
 {
-    public int Dinocode { get; set; }
+    public int DinoCode { get; set; }
     
-    public int TargetDinocode { get; set; }
+    public int TargetDinoCode { get; set; }
     
     public int RelationTypeId { get; set; }
     

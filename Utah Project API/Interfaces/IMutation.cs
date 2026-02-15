@@ -25,7 +25,7 @@ public interface IMutation
     /// </summary>
     /// <param name="speciesData"></param>
     /// <returns>returns the newly created species</returns>
-    Task<Species> CreateSpecies(SpeciesDto speciesData);
+    // Task<Species> CreateSpecies(SpeciesDto speciesData);
         
     /// <summary>
     /// updates an existing species.
@@ -33,7 +33,7 @@ public interface IMutation
     /// <param name="speciesId"></param>
     /// <param name="speciesData"></param>
     /// <returns>updates a species</returns>
-    Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
+    // Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
         
     /// <summary>
     /// deletes an existing species.
