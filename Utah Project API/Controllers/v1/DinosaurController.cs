@@ -110,4 +110,25 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
             return NotFound(e.Message);
         }
     }
+
+    [HttpDelete("{dinoCode:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<Dinosaur>> DeleteDinosaur(int dinoCode)
+    {
+        try
+        {
+            Dinosaur deleted = await dinosaurServiceService.DeleteDinosaur(User, dinoCode);
+            return Ok(deleted);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid(e.Message);
+        }
+    }
 }
