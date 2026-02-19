@@ -6,7 +6,6 @@ namespace Utah_Project_API.Models;
 
 public class User : IdentityUser
 {
-    [PersonalData]
     public string? DisplayName { get; set; }
     
     public DateTime? LastLogin { get; set; }

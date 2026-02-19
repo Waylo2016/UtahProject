@@ -22,6 +22,10 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
         
+        // add Aspire ServiceDefaults
+        builder.AddServiceDefaults();
+        
+        
         // Add EFCore with SQL server
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("UtahDB")
@@ -33,8 +37,6 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         
-        // add Aspire ServiceDefaults
-        builder.AddServiceDefaults();
         
         // Set-up versioning
         builder.Services.AddApiVersioning(options =>

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Utah_Project_API.DTO.Dinosaur;
+using Utah_Project_API.Models;
 using Utah_Project_API.Models.Dinosaur;
 
 namespace Utah_Project_API.Interfaces;
@@ -18,20 +21,22 @@ public interface IDinosaurService
     /// <param name="dinoCode"></param>
     /// <returns></returns>
     Task<Dinosaur> GetDinosaurById(int dinoCode);
-    
+
     /// <summary>
     /// gets all dinosaurs owned by a specific user.
     /// </summary>
+    /// <param name="user"></param>
     /// <param name="userId">the id of the user whose dinosaurs are being retrieved</param>
     /// <returns>a list of dinosaurs owned by the specified user</returns>
-    Task<Dinosaur> GetAllDinosaursUser(string userId);
-    
+    Task<List<Dinosaur>> GetAllDinosaursUser(ClaimsPrincipal user);
+
     /// <summary>
     /// Create a new dinosaur.
     /// </summary>
     /// <param name="dinosaurData">data used to create a Dinosaur</param>
+    /// <param name="user"></param>
     /// <returns>The created dinosaur.</returns>
-    // Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData);
+    Task<Dinosaur> CreateDinosaur(CreateDinosaurDto dinosaurData, ClaimsPrincipal user);
     
     /// <summary>
     /// updates an existing dinosaur.
@@ -39,15 +44,15 @@ public interface IDinosaurService
     /// <param name="dinoCode">numerical code of a dinosaur</param>
     /// <param name="dinosaurData">data used to update a dinosaur</param>
     /// <returns>the updated dinosaur</returns>
-    // Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData);
-    
+     // Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData);
+
     /// <summary>
     /// deletes a dinosaur by its numerical code.
     /// </summary>
+    /// <param name="user"></param>
     /// <param name="dinoCode">numerical code of a dinosaur</param>
-    /// <param name="userId">user Id to ensure only the user themselves can delete the dinosaur</param>
     /// <returns>the deleted dinosaur</returns>
-    Task<Dinosaur> DeleteDinosaur(string userId, int dinoCode);
+    Task<Dinosaur> DeleteDinosaur(ClaimsPrincipal user, int dinoCode);
     
     
     /// <summary>
@@ -104,5 +109,5 @@ public interface IDinosaurService
     /// </summary>
     /// <param name="childrenData">data used to create the children</param>
     /// <returns>the updated dinosaur with the created children</returns>
-    //Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData); // ooh yeah they fucked!! they did the oinky sploinky!! the freaky deaky!! the dirty wirty!! the nasty pasty!! the funky monkey!! the dirty wirty!! the nasty pasty!!
+    Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData); // ooh yeah they fucked!! they did the oinky sploinky!! the freaky deaky!! the dirty wirty!! the nasty pasty!! the funky monkey!! the dirty wirty!! the nasty pasty!!
 }

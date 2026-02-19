@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using Utah_Project_API.Data;
+using Utah_Project_API.DTO.Dinosaur;
 using Utah_Project_API.Exceptions;
 using Utah_Project_API.Interfaces;
+using Utah_Project_API.Models;
 using Utah_Project_API.Models.Dinosaur;
+using Image = SixLabors.ImageSharp.Image;
+using Rectangle = SixLabors.ImageSharp.Rectangle;
 
 namespace Utah_Project_API.Services;
 
 public class DinosaurService(
-    ApplicationDbContext context
+    ApplicationDbContext context, 
+    UserManager<User> userManager
     ) : IDinosaurService
 {
     public async Task<List<Dinosaur>> GetAllDinosaurs()
@@ -31,12 +42,97 @@ public class DinosaurService(
         return dinosaur;
     }
 
-    public async Task<Dinosaur> GetAllDinosaursUser(string userId)
+    public async Task<List<Dinosaur>> GetAllDinosaursUser(ClaimsPrincipal user)
     {
-        throw new System.NotImplementedException();
+        var dinosaur = await context.Dinosaurs.Where(d => d.UserId == user
+                .FindFirstValue(ClaimTypes.NameIdentifier))
+            .ToListAsync();
+        
+        if (dinosaur == null)
+        {
+            throw new NotFoundException("No dinosaurs found for this user");
+        }
+        
+        return dinosaur;
     }
 
-    public async Task<Dinosaur> DeleteDinosaur(string userId, int dinoCode)
+    public async Task<Dinosaur> CreateDinosaur(CreateDinosaurDto dinosaurData, ClaimsPrincipal user)
+    {
+        User? currentUser = await userManager.GetUserAsync(user);
+        
+        if (currentUser == null)
+        {
+            throw new NotFoundException("User not found");
+        }
+        
+        if (!string.IsNullOrEmpty(dinosaurData.Picture) && dinosaurData.Picture.StartsWith("data:image"))
+        {
+            try
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                Directory.CreateDirectory(uploadsDir);
+
+                string base64Data = dinosaurData.Picture.Contains(',')
+                    ? dinosaurData.Picture[(dinosaurData.Picture.IndexOf(',') + 1)..]
+                    : dinosaurData.Picture;
+
+                byte[] bytes = Convert.FromBase64String(base64Data);
+                string fileName = $"{Guid.NewGuid()}.png";
+                string filePath = Path.Combine(uploadsDir, fileName);
+
+                using (Image image = Image.Load(bytes))
+                {
+                    const int targetSize = 800;
+
+                    double scale = Math.Max(
+                        (double)targetSize / image.Width,
+                        (double)targetSize / image.Height
+                    );
+
+                    int resizedWidth = (int)(image.Width * scale);
+                    int resizedHeight = (int)(image.Height * scale);
+
+                    image.Mutate(x => x.Resize(resizedWidth, resizedHeight));
+
+                    int cropX = (resizedWidth - targetSize) / 2;
+                    int cropY = (resizedHeight - targetSize) / 2;
+
+                    Rectangle cropRect = new(cropX, cropY, targetSize, targetSize);
+
+                    image.Mutate(x => x.Crop(cropRect));
+
+                    await image.SaveAsPngAsync(filePath);
+                }
+
+                dinosaurData.Picture = $"/uploads/{fileName}";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to process image", ex);
+            }
+        }
+        
+        Dinosaur newDinosaur = new()
+        {
+            UserId = currentUser.Id,
+            DinoName = dinosaurData.DinoName,
+            Color = dinosaurData.Color,
+            SpeciesId = dinosaurData.SpeciesId,
+            Picture = dinosaurData.Picture
+        };
+
+        context.Dinosaurs.Add(newDinosaur);
+        await context.SaveChangesAsync();
+
+        return newDinosaur;
+    }
+
+    // public async Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData)
+    // {
+    //     throw new NotImplementedException();
+    // }
+
+    public async Task<Dinosaur> DeleteDinosaur(ClaimsPrincipal user, int dinoCode)
     {
         throw new System.NotImplementedException();
     }
@@ -69,5 +165,10 @@ public class DinosaurService(
     public async Task<Dinosaur> RemoveMutationFromDinosaur(int dinoCode, int mutationId)
     {
         throw new System.NotImplementedException();
+    }
+
+    public async Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -18,6 +18,8 @@ public class Dinosaur
     
     public int SpeciesId { get; set; }
     
+    public string? Picture { get; set; }
+    
     [JsonIgnore]
     public Species Species { get; set; }
     
