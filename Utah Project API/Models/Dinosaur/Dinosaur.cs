@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Utah_Project_API.Enums;
 
 namespace Utah_Project_API.Models.Dinosaur;
 
@@ -19,6 +20,8 @@ public class Dinosaur
     public int SpeciesId { get; set; }
     
     public string? Picture { get; set; }
+    
+    public Gender gender { get; set; }
     
     [JsonIgnore]
     public Species Species { get; set; }
