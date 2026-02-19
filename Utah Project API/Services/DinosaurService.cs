@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
@@ -56,7 +57,7 @@ public class DinosaurService(
         return dinosaur;
     }
 
-    public async Task<Dinosaur> CreateDinosaur(CreateDinosaurDto dinosaurData, ClaimsPrincipal user)
+    public async Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData, ClaimsPrincipal user)
     {
         User? currentUser = await userManager.GetUserAsync(user);
         
@@ -118,7 +119,8 @@ public class DinosaurService(
             DinoName = dinosaurData.DinoName,
             Color = dinosaurData.Color,
             SpeciesId = dinosaurData.SpeciesId,
-            Picture = dinosaurData.Picture
+            Picture = dinosaurData.Picture,
+            Gender = dinosaurData.gender
         };
 
         context.Dinosaurs.Add(newDinosaur);
@@ -127,14 +129,48 @@ public class DinosaurService(
         return newDinosaur;
     }
 
-    // public async Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData)
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public async Task<Dinosaur> PatchDinosaur(int dinoCode, JsonPatchDocument<DinosaurDto> patchDoc)
+    {
+        Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
+        
+        if (dinosaur == null)
+        {
+            throw new NotFoundException("Dinosaur not found");
+        }
+
+        DinosaurDto dto = new()
+        {
+            DinoName = dinosaur.DinoName,
+            Color = dinosaur.Color,
+            SpeciesId = dinosaur.SpeciesId,
+            Picture = dinosaur.Picture,
+            gender = dinosaur.Gender
+
+        };
+        
+        patchDoc.ApplyTo(dto);
+        
+        await context.SaveChangesAsync();
+        return dinosaur;
+    }
 
     public async Task<Dinosaur> DeleteDinosaur(ClaimsPrincipal user, int dinoCode)
     {
-        throw new System.NotImplementedException();
+        Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
+        if (dinosaur == null)
+        {
+            throw new NotFoundException("Dinosaur not found");
+        }
+
+        if (dinosaur.UserId != user.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            throw new UnauthorizedAccessException("You do not have permission to delete this dinosaur");
+        }
+
+        context.Dinosaurs.Remove(dinosaur);
+        await context.SaveChangesAsync();
+
+        return dinosaur;
     }
 
     public async Task<Dinosaur> AddBehaviourToDinosaur(int dinoCode, int behaviourId)

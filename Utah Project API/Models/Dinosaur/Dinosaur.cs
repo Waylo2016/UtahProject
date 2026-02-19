@@ -21,7 +21,7 @@ public class Dinosaur
     
     public string? Picture { get; set; }
     
-    public Gender gender { get; set; }
+    public Gender Gender { get; set; }
     
     [JsonIgnore]
     public Species Species { get; set; }

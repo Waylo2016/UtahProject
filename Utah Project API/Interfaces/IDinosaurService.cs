@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Azure;
+using Microsoft.AspNetCore.JsonPatch;
 using Utah_Project_API.DTO.Dinosaur;
-using Utah_Project_API.Models;
 using Utah_Project_API.Models.Dinosaur;
 
 namespace Utah_Project_API.Interfaces;
@@ -36,15 +37,16 @@ public interface IDinosaurService
     /// <param name="dinosaurData">data used to create a Dinosaur</param>
     /// <param name="user"></param>
     /// <returns>The created dinosaur.</returns>
-    Task<Dinosaur> CreateDinosaur(CreateDinosaurDto dinosaurData, ClaimsPrincipal user);
-    
+    Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData, ClaimsPrincipal user);
+
     /// <summary>
     /// updates an existing dinosaur.
     /// </summary>
     /// <param name="dinoCode">numerical code of a dinosaur</param>
+    /// <param name="patchDoc"></param>
     /// <param name="dinosaurData">data used to update a dinosaur</param>
     /// <returns>the updated dinosaur</returns>
-     // Task<Dinosaur> UpdateDinosaur(int dinoCode, DinosaurDto dinosaurData);
+    Task<Dinosaur> PatchDinosaur(int dinoCode, JsonPatchDocument<DinosaurDto> patchDoc);
 
     /// <summary>
     /// deletes a dinosaur by its numerical code.

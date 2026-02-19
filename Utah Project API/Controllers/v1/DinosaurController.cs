@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Utah_Project_API.DTO.Dinosaur;
 using Utah_Project_API.Exceptions;
 using Utah_Project_API.Interfaces;
 using Utah_Project_API.Models.Dinosaur;
@@ -61,6 +63,47 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         {
             List<Dinosaur> dinosaurs = await dinosaurServiceService.GetAllDinosaursUser(User);
             return Ok(dinosaurs);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<Dinosaur>> CreateDinosaur([FromBody] DinosaurDto dinosaurData)
+    {
+        try
+        {
+            Dinosaur created = await dinosaurServiceService.CreateDinosaur(dinosaurData, User);
+            return CreatedAtAction(
+                actionName: nameof(GetDinosaurById),
+                routeValues: new { dinoCode = created.DinoCode, version = "1.0" },
+                value: created
+            );
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return Conflict(e.Message);
+        }
+    }
+
+    [HttpPatch("{dinoCode:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> PatchDinosaur(int dinoCode,
+        [FromBody] JsonPatchDocument<DinosaurDto> patchDoc)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.PatchDinosaur(dinoCode, patchDoc);
+            return Ok(updated);
         }
         catch (NotFoundException e)
         {
