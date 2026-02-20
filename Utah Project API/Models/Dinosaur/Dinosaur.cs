@@ -40,8 +40,7 @@ public class Dinosaur
 
     [JsonIgnore]
     public ICollection<Nesting_Lib> NestingsAsParent2 { get; set; } = new List<Nesting_Lib>();
-
-    [JsonIgnore]
+    
     public int? NestId { get; set; }
 
     [JsonIgnore]

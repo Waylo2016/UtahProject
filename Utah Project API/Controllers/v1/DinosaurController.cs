@@ -70,6 +70,11 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         }
     }
 
+    /// <summary>
+    /// Creates new dinosaur
+    /// </summary>
+    /// <param name="dinosaurData"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -94,11 +99,17 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         }
     }
 
+    /// <summary>
+    /// Updates data in the dinosaur with the given id.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="patchDoc"></param>
+    /// <returns></returns>
     [HttpPatch("{dinoCode:int}")]
     [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Dinosaur>> PatchDinosaur(int dinoCode,
-        [FromBody] JsonPatchDocument<DinosaurDto> patchDoc)
+        [FromBody] JsonPatchDocument<UpdateDinosaurDto> patchDoc)
     {
         try
         {
@@ -111,6 +122,11 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         }
     }
 
+    /// <summary>
+    /// deletes dinosaur
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <returns></returns>
     [HttpDelete("{dinoCode:int}")]
     [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -129,6 +145,159 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         catch (UnauthorizedAccessException e)
         {
             return Forbid(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// adds behaviour to a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="behaviourCode"></param>
+    /// <returns></returns>
+    [HttpPost("{dinoCode:int}/behaviours/{behaviourCode}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> AddBehaviourToDinosaur(int dinoCode, string behaviourCode)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.AddBehaviourToDinosaur(dinoCode, behaviourCode);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// removes a behaviour from a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="behaviourId"></param>
+    /// <returns></returns>
+    [HttpDelete("{dinoCode:int}/behaviours/{behaviourId:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> RemoveBehaviourFromDinosaur(int dinoCode, int behaviourId)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.RemoveBehaviourFromDinosaur(dinoCode, behaviourId);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// adds a nest to a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="nestingId"></param>
+    /// <returns></returns>
+    [HttpPost("{dinoCode:int}/nests/{nestingId:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> AddNestToDinosaur(int dinoCode, int nestingId)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.AddNestToDinosaur(dinoCode, nestingId);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// removes a nest from a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="nestingId"></param>
+    /// <returns></returns>
+    [HttpDelete("{dinoCode:int}/nests/{nestingId:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> RemoveNestFromDinosaur(int dinoCode, int nestingId)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.RemoveNestFromDinosaur(dinoCode, nestingId);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// adds a mutation to a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="mutationCode"></param>
+    /// <returns></returns>
+    [HttpPost("{dinoCode:int}/mutations/{mutationCode}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> AddMutationToDinosaur(int dinoCode, string mutationCode)
+    {
+        try
+        {
+            Dinosaur updated = await dinosaurServiceService.AddMutationToDinosaur(dinoCode, mutationCode);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+    
+    /// <summary>
+    /// removes a mutation from a dinosaur.
+    /// </summary>
+    /// <param name="dinoCode"></param>
+    /// <param name="mutationId"></param>
+    /// <returns></returns>
+    [HttpDelete("{dinoCode:int}/mutations/{mutationId:int}")]
+    [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Dinosaur>> RemoveMutationFromDinosaur(int dinoCode, int mutationId)
+    {
+        try
+        {            
+            Dinosaur updated = await dinosaurServiceService.RemoveMutationFromDinosaur(dinoCode, mutationId);
+            return Ok(updated);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// adds a child to a dinosaur
+    /// </summary>
+    /// <param name="childrenData"></param>
+    /// <returns></returns>
+    [HttpPost("children")]
+    [ProducesResponseType(typeof(List<Dinosaur>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<List<Dinosaur>>> CreateChildrenForDinosaur([FromBody] DinoChildrenDto childrenData)
+    {
+        try
+        {
+            Dinosaur createdChildren = await dinosaurServiceService.CreateChildrenForDinosaur(childrenData);
+            return Ok(createdChildren);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
         }
     }
 }

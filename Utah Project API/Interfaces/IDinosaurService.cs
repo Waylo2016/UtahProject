@@ -27,7 +27,6 @@ public interface IDinosaurService
     /// gets all dinosaurs owned by a specific user.
     /// </summary>
     /// <param name="user"></param>
-    /// <param name="userId">the id of the user whose dinosaurs are being retrieved</param>
     /// <returns>a list of dinosaurs owned by the specified user</returns>
     Task<List<Dinosaur>> GetAllDinosaursUser(ClaimsPrincipal user);
 
@@ -43,10 +42,9 @@ public interface IDinosaurService
     /// updates an existing dinosaur.
     /// </summary>
     /// <param name="dinoCode">numerical code of a dinosaur</param>
-    /// <param name="patchDoc"></param>
-    /// <param name="dinosaurData">data used to update a dinosaur</param>
+    /// <param name="patchDoc">a JsonPatchDocument containing the changes to apply to the dinosaur</param>
     /// <returns>the updated dinosaur</returns>
-    Task<Dinosaur> PatchDinosaur(int dinoCode, JsonPatchDocument<DinosaurDto> patchDoc);
+    Task<Dinosaur> PatchDinosaur(int dinoCode, JsonPatchDocument<UpdateDinosaurDto> patchDoc);
 
     /// <summary>
     /// deletes a dinosaur by its numerical code.
@@ -55,15 +53,15 @@ public interface IDinosaurService
     /// <param name="dinoCode">numerical code of a dinosaur</param>
     /// <returns>the deleted dinosaur</returns>
     Task<Dinosaur> DeleteDinosaur(ClaimsPrincipal user, int dinoCode);
-    
-    
+
+
     /// <summary>
     /// adds a behavior to a dinosaur.
     /// </summary>
     /// <param name="dinoCode">numerical code of a dinosaur</param>
-    /// <param name="behaviourId">numerical id of a behaviour</param>
+    /// <param name="behaviourCode">numerical id of a behaviour</param>
     /// <returns>the updated dinosaur with the added behaviour</returns>
-    Task<Dinosaur> AddBehaviourToDinosaur(int dinoCode, int behaviourId);
+    Task<Dinosaur> AddBehaviourToDinosaur(int dinoCode, string behaviourCode);
     
     /// <summary>
     /// removes a behavior from a dinosaur.
@@ -88,14 +86,14 @@ public interface IDinosaurService
     /// <param name="nestingId">numerical id of a nest</param>
     /// <returns>the updated dinosaur with the removed nest</returns>
     Task<Dinosaur> RemoveNestFromDinosaur(int dinoCode, int nestingId);
-    
+
     /// <summary>
     /// add a mutation to a dinosaur.
     /// </summary>
     /// <param name="dinoCode">numerical code of a dinosaur</param>
-    /// <param name="mutationId">numerical id of a mutation</param>
+    /// <param name="mutationCode"></param>
     /// <returns>the updated dinosaur with the added mutation</returns>
-    Task<Dinosaur> AddMutationToDinosaur(int dinoCode, int mutationId);
+    Task<Dinosaur> AddMutationToDinosaur(int dinoCode, string mutationCode);
         
     /// <summary>
     /// removes a mutation from a dinosaur.

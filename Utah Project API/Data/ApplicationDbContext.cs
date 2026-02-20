@@ -63,13 +63,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.Entity<Nesting_Lib>()
             .HasOne(n => n.Parent1)
             .WithMany(d => d.NestingsAsParent1)
-            .HasForeignKey(n => n.Parent1Id)
+            .HasForeignKey(n => n.Parent1Code)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Nesting_Lib>()
             .HasOne(n => n.Parent2)
             .WithMany(d => d.NestingsAsParent2)
-            .HasForeignKey(n => n.Parent2Id)
+            .HasForeignKey(n => n.Parent2Code)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<Dinosaur>()

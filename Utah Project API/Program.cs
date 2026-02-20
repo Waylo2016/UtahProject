@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,8 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
 using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using Utah_Project_API.Data;
 using Utah_Project_API.Filters;
@@ -17,6 +20,24 @@ namespace Utah_Project_API;
 
 public class Program
 {
+    
+    static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
+    {
+        var builder = new ServiceCollection()
+            .AddLogging()
+            .AddMvc()
+            .AddNewtonsoftJson()
+            .Services.BuildServiceProvider();
+
+        return builder
+            .GetRequiredService<IOptions<MvcOptions>>()
+            .Value
+            .InputFormatters
+            .OfType<NewtonsoftJsonPatchInputFormatter>()
+            .First();
+    }
+    
+    
     public static void Main(string[] args)
     {
 
@@ -37,7 +58,10 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         
-        builder.Services.AddControllers()
+        builder.Services.AddControllers(o =>
+        {
+            o.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+        })
             .AddNewtonsoftJson(); // for JSON Patch support
         
         

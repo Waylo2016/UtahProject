@@ -8,9 +8,11 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
+        <NoWarn>$(NoWarn);1587</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.1" />
         <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.3" />
@@ -46,7 +48,6 @@
     <ItemGroup>
       <Folder Include="DTO\Mutation\" />
       <Folder Include="DTO\Nesting\" />
-      <Folder Include="DTO\Species\" />
       <Folder Include="Migrations\" />
       <Folder Include="wwwroot\uploads\" />
     </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
+using Utah_Project_API.DTO.Species;
 using Utah_Project_API.Models;
 
 namespace Utah_Project_API.Interfaces;
@@ -24,7 +26,7 @@ public interface ISpeciesService
     /// </summary>
     /// <param name="speciesData">data used to create a species</param>
     /// <returns>The created species.</returns>
-    // Task<Species> CreateSpecies(SpeciesDto speciesData);
+    Task<Species> CreateSpecies(int speciesId, string speciesName);
     
     /// <summary>
     /// updates an existing species.
@@ -32,7 +34,7 @@ public interface ISpeciesService
     /// <param name="speciesId">numerical id of a species</param>
     /// <param name="speciesData">data used to update a species</param>
     /// <returns>the updated species</returns>
-    // Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
+    Task<Species> UpdateSpecies(int speciesId, PatchDto speciesData);
     
     /// <summary>
     /// deletes an existing species.
