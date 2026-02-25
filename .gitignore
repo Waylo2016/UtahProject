@@ -59,3 +59,10 @@ nunit-*.xml
 .idea/.idea.Utah Project/.idea/encodings.xml
 >>>>>>> Stashed changes
 /Utah Project.AppHost/..Data
+/frontend/.next
+/frontend/node_modules
+/frontend/.idea
+frontend/next-env.d.ts
+/.idea
+frontend/package-lock.json
+Utah Project API/15022026 DB picture.png
