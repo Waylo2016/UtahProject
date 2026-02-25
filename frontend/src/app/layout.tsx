@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio",
+  icons:{
+    icon: "/WayloTechTab.svg"
+  }
 };
 
 export default function RootLayout({
@@ -29,7 +32,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
             rel="stylesheet"/>
     </head>
     <body className={`${geistSans.variable} ${geistMono.variable}`} style={{backgroundColor: "var(--background)"}}>
