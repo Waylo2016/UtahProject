@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Utah_Project_API.Models;
+using Microsoft.AspNetCore.JsonPatch;
+using Utah_Project_API.DTO.DinoMutations;
 
 namespace Utah_Project_API.Interfaces;
 
@@ -11,21 +13,21 @@ public interface IMutationService
     /// gets all species.
     /// </summary>
     /// <returns></returns>
-    Task<List<Species>> GetSpecies();
+    Task<List<Species>> GetMutations();
     
     /// <summary>
     /// gets a specific species by its numerical id.
     /// </summary>
-    /// <param name="speciesId">the numerical id of the species being retrieved</param>
+    /// <param name="mutationId">the numerical id of the species being retrieved</param>
     /// <returns>the species with the specified id</returns>
-    Task<Species> GetSpeciesById(int speciesId);
+    Task<Species> GetMutationById(int mutationId);
         
     /// <summary>
     /// creates a new species
     /// </summary>
-    /// <param name="speciesData"></param>
+    /// <param name="mutationDto"></param>
     /// <returns>returns the newly created species</returns>
-    // Task<Species> CreateSpecies(SpeciesDto speciesData);
+     Task<Species> CreateMutation(CreateMutationDto mutationDto);
         
     /// <summary>
     /// updates an existing species.
@@ -33,12 +35,12 @@ public interface IMutationService
     /// <param name="speciesId"></param>
     /// <param name="speciesData"></param>
     /// <returns>updates a species</returns>
-    // Task<Species> UpdateSpecies(int speciesId, SpeciesDto speciesData);
+     Task<Species> UpdateMutation(int speciesId, JsonPatchDocument<UpdateMutationsDto> patchDoc);
         
     /// <summary>
     /// deletes an existing species.
     /// </summary>
     /// <param name="speciesId"></param>
     /// <returns>deletes a species</returns>
-    Task<Species> DeleteSpecies(int speciesId);
+    Task<Species> DeleteMutation(int speciesId);
 }

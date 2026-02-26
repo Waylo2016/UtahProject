@@ -46,8 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTO\Mutation\" />
-      <Folder Include="DTO\Nesting\" />
+      <Folder Include="DTO\DinoNests\" />
       <Folder Include="Migrations\" />
       <Folder Include="wwwroot\uploads\" />
     </ItemGroup>
