@@ -8,6 +8,7 @@ using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
 using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi;
 using Utah_Project_API.Data;
 using Utah_Project_API.Filters;
@@ -22,13 +23,18 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         // Add EFCore with SQL server
-        builder.AddSqlServerDbContext<ApplicationDbContext>("UtahDB");
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("UtahDB")
+            ?? throw new InvalidOperationException("Connection string 'UtahDB' not found.")));
         
         // Add services to the container.
         builder.Services.AddAuthorization();
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+        
+        // add Aspire ServiceDefaults
+        builder.AddServiceDefaults();
         
         // Set-up versioning
         builder.Services.AddApiVersioning(options =>
@@ -49,7 +55,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v2", new OpenApiInfo { Title = "UtahProject", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "UtahProject", Version = "v1" });
 
             string xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -63,10 +69,17 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => {c.SwaggerEndpoint("/swagger/v1/swagger.json", "UtahProject v1");});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UtahProject v1");
+            });
+             
         }
 
         app.UseHttpsRedirection();
+        
+        //map aspire service defaults endpoints
+        app.MapDefaultEndpoints();
 
         app.UseAuthorization();
 

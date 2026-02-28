@@ -4,13 +4,13 @@ namespace Utah_Project_API.Models;
 
 public class Dino_Nesting
 {
-    public int dinoCode { get; set; }
+    public int DinoCode { get; set; }
     
     [JsonIgnore]
     public Dinosaur.Dinosaur Dinosaur { get; set; }
     
-    public int nestingId { get; set; }
+    public int NestingId { get; set; }
     
     [JsonIgnore]
-    public Nesting_Lib nesting { get; set; }
+    public Nesting_Lib Nesting { get; set; }
 }

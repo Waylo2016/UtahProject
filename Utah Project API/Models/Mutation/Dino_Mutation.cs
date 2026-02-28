@@ -5,15 +5,15 @@ namespace Utah_Project_API.Models;
 
 public class Dino_Mutation
 {
-    public int dinoCode { get; set; }
+    public int DinoCode { get; set; }
     
     [JsonIgnore]
-    public Dinosaur.Dinosaur dinosaur { get; set; }
+    public Dinosaur.Dinosaur Dinosaur { get; set; }
     
-    public string mutationCode { get; set; }
+    public string MutationCode { get; set; }
     
     [JsonIgnore]
     public Mutation_Lib Mutation { get; set; }
     
-    public string mutationName { get; set; }
+    public string MutationName { get; set; }
 }

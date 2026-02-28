@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Utah_Project_API.Data;
 
@@ -11,9 +12,11 @@ using Utah_Project_API.Data;
 namespace Utah_Project_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260215132359_RenameTraitsToMutationsPt2ElectricBoogaloo")]
+    partial class RenameTraitsToMutationsPt2ElectricBoogaloo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,10 +227,10 @@ namespace Utah_Project_API.Migrations
 
             modelBuilder.Entity("Utah_Project_API.Models.Dino_Relationship", b =>
                 {
-                    b.Property<int>("DinoCode")
+                    b.Property<int>("Dinocode")
                         .HasColumnType("int");
 
-                    b.Property<int>("TargetDinoCode")
+                    b.Property<int>("TargetDinocode")
                         .HasColumnType("int");
 
                     b.Property<int>("RelationTypeId")
@@ -236,11 +239,11 @@ namespace Utah_Project_API.Migrations
                     b.Property<string>("CustomBondLabel")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DinoCode", "TargetDinoCode", "RelationTypeId");
+                    b.HasKey("Dinocode", "TargetDinocode", "RelationTypeId");
 
                     b.HasIndex("RelationTypeId");
 
-                    b.HasIndex("TargetDinoCode");
+                    b.HasIndex("TargetDinocode");
 
                     b.ToTable("DinoRelationships");
                 });
@@ -572,7 +575,7 @@ namespace Utah_Project_API.Migrations
                 {
                     b.HasOne("Utah_Project_API.Models.Dinosaur.Dinosaur", "Dino")
                         .WithMany("DinoRelationships")
-                        .HasForeignKey("DinoCode")
+                        .HasForeignKey("Dinocode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -584,7 +587,7 @@ namespace Utah_Project_API.Migrations
 
                     b.HasOne("Utah_Project_API.Models.Dinosaur.Dinosaur", "TargetDino")
                         .WithMany()
-                        .HasForeignKey("TargetDinoCode")
+                        .HasForeignKey("TargetDinocode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
