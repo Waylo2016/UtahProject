@@ -19,10 +19,14 @@ public class Program
         IResourceBuilder<SqlServerDatabaseResource> db = sql.AddDatabase("UtahDB");
         
 
-        IResourceBuilder<ProjectResource> api = builder.AddProject<Utah_Project_API>("api")
-            .WaitFor(db)
-            .WithReference(db);
-
+        var api = builder.AddProject<Utah_Project_API>("api")
+            .WithReference(db)
+            .WaitFor(db);
+        
+        var website = builder.AddProject<Utah_Project_Web>("website")
+            .WithReference(api)
+            .WaitFor(api);
+        
         builder.Build().Run();
     }
 }

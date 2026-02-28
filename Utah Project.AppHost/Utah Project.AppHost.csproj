@@ -2,10 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utah Project API\Utah Project API.csproj" />
+    <ProjectReference Include="..\Utah Project Web\Utah Project Web.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.1.1" />
+    <PackageReference Include="Aspire.Hosting.Docker" Version="13.1.2-preview.1.26125.13" />
     <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.1.1" />
     <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
