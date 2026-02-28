@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utah Project.AppHost", "Uta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utah Project.ServiceDefaults", "Utah Project.ServiceDefaults\Utah Project.ServiceDefaults.csproj", "{A92A6E33-F2EA-4382-B89D-E5CE0D082D06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utah Project Web", "Utah Project Web\Utah Project Web.csproj", "{50217D23-ECAF-4F1F-BED1-71BD61FAF114}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,18 @@ Global
 		{A92A6E33-F2EA-4382-B89D-E5CE0D082D06}.Release|x64.Build.0 = Release|Any CPU
 		{A92A6E33-F2EA-4382-B89D-E5CE0D082D06}.Release|x86.ActiveCfg = Release|Any CPU
 		{A92A6E33-F2EA-4382-B89D-E5CE0D082D06}.Release|x86.Build.0 = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|x64.Build.0 = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Debug|x86.Build.0 = Debug|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|x64.ActiveCfg = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|x64.Build.0 = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|x86.ActiveCfg = Release|Any CPU
+		{50217D23-ECAF-4F1F-BED1-71BD61FAF114}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

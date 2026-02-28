@@ -12,8 +12,13 @@ public class Program
         
         var db = sql.AddDatabase("UtahDB");
 
-        builder.AddProject<Utah_Project_API>("api")
-            .WithReference(db);
+        var api = builder.AddProject<Utah_Project_API>("api")
+            .WithReference(db)
+            .WaitFor(db);
+        
+        var website = builder.AddProject<Utah_Project_Web>("website")
+            .WithReference(api)
+            .WaitFor(api);
         
         builder.Build().Run();
     }
