@@ -26,6 +26,11 @@ public class DinosaurService(
     UserManager<User> userManager
     ) : IDinosaurService
 {
+    
+    /// <summary>
+    /// Retrieves a list of all dinosaurs.
+    /// </summary>
+    /// <returns>a list of all dinos</returns>
     public async Task<List<Dinosaur>> GetAllDinosaurs()
     {
         List<Dinosaur> dinosaurs = await context.Dinosaurs.ToListAsync();
@@ -33,6 +38,12 @@ public class DinosaurService(
         return dinosaurs;
     }
 
+    /// <summary>
+    /// Retrieves a specific dinosaur by its numerical id.
+    /// </summary>
+    /// <param name="dinoCode">The numerical id of a dinosaur</param>
+    /// <returns>The dinosaur with the given id</returns>
+    /// <exception cref="NotFoundException">Exception thrown when no dinosaur is found with the given id</exception>
     public async Task<Dinosaur> GetDinosaurById(int dinoCode)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -44,6 +55,12 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Retrieves a specific dinosaur by its user id.
+    /// </summary>
+    /// <param name="user">the user</param>
+    /// <returns>The dinosaurs with the given user id</returns>
+    /// <exception cref="NotFoundException">Exception thrown when no dinosaurs are found for the given user</exception>
     public async Task<List<Dinosaur>> GetAllDinosaursUser(ClaimsPrincipal user)
     {
         var dinosaur = await context.Dinosaurs.Where(d => d.UserId == user
@@ -58,6 +75,14 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dinosaurData"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">Exception thrown when no dinosaurs found for this user</exception>
+    /// <exception cref="ImageException">Exception thrown when image processing fails</exception>
     public async Task<Dinosaur> CreateDinosaur(DinosaurDto dinosaurData, ClaimsPrincipal user)
     {
         User? currentUser = await userManager.GetUserAsync(user);
@@ -108,9 +133,9 @@ public class DinosaurService(
 
                 dinosaurData.Picture = $"/uploads/{fileName}";
             }
-            catch (Exception ex)
+            catch (ImageException ex)
             {
-                throw new Exception("Failed to process image", ex);
+                throw new ImageException("Failed to process image", ex);
             }
         }
         
@@ -130,6 +155,14 @@ public class DinosaurService(
         return newDinosaur;
     }
 
+    
+    /// <summary>
+    /// partially updates an existing dinosaur via JSON Patch.
+    /// </summary>
+    /// <param name="dinoCode">Dinosaur code</param>
+    /// <param name="patchDoc">the JSON patch doc</param>
+    /// <returns>I did it boss</returns>
+    /// <exception cref="NotFoundException">Exception thrown when no dinosaurs found for this user</exception>
     public async Task<Dinosaur> PatchDinosaur(int dinoCode, JsonPatchDocument<UpdateDinosaurDto> patchDoc)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -161,6 +194,15 @@ public class DinosaurService(
         await context.SaveChangesAsync();
         return dinosaur;
     }
+    
+    /// <summary>
+    /// Removes a dinosaur from the database.
+    /// </summary>
+    /// <param name="user">the owner of the dinosaur</param>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">Exception thrown when no dinosaurs found for this user</exception>
+    /// <exception cref="UnauthorizedAccessException">Exception thrown when user does not have permission to delete dinosaur</exception>
 
     public async Task<Dinosaur> DeleteDinosaur(ClaimsPrincipal user, int dinoCode)
     {
@@ -181,6 +223,13 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Adds behavior to a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="behaviourCode">the behaviour code</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">Exception thrown when user doesn't have the dinosaur or when behaviour is not found</exception>
     public async Task<Dinosaur> AddBehaviourToDinosaur(int dinoCode, string behaviourCode)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -202,6 +251,14 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    
+    /// <summary>
+    /// removes behavior from a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="behaviourId">the behaviour id</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">Exception thrown when user doesn't have the dinosaur or when behaviour is not found</exception>
     public async Task<Dinosaur> RemoveBehaviourFromDinosaur(int dinoCode, int behaviourId)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -223,6 +280,13 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Adds a nest to a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="nestingId">the nest id</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">Exception thrown when user doesn't have the dinosaur or when nest is not found</exception>
     public async Task<Dinosaur> AddNestToDinosaur(int dinoCode, int nestingId)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -245,6 +309,13 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Removes a nest from a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="nestingId">the nest id</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">thrown when dinosaur isn't found or when nest isn't found</exception>
     public async Task<Dinosaur> RemoveNestFromDinosaur(int dinoCode, int nestingId)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -267,6 +338,13 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Adds a mutation to a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="mutationCode">the mutation code</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">thrown when dinosaur isn't found or when mutation isn't found</exception>
     public async Task<Dinosaur> AddMutationToDinosaur(int dinoCode, string mutationCode)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -286,7 +364,6 @@ public class DinosaurService(
         {
             DinoCode = dinoCode,
             MutationCode = mutationCode,
-            MutationName = mutation.MutationName
         };
         
         dinosaur.DinoMutations.Add(dinoMutation);
@@ -296,6 +373,13 @@ public class DinosaurService(
         return dinosaur;
     }
 
+    /// <summary>
+    /// Removes a mutation from a dinosaur
+    /// </summary>
+    /// <param name="dinoCode">the dinosaur code</param>
+    /// <param name="mutationId">the mutation id</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">thrown when dinosaur isn't found or when mutation isn't found</exception>
     public async Task<Dinosaur> RemoveMutationFromDinosaur(int dinoCode, int mutationId)
     {
         Dinosaur? dinosaur = await context.Dinosaurs.FirstOrDefaultAsync(d => d.DinoCode == dinoCode);
@@ -317,6 +401,14 @@ public class DinosaurService(
         
         return dinosaur;
     }
+    
+    /// <summary>
+    /// Adds a relationship to a dinosaur
+    /// </summary>
+    /// <param name="childrenData">the children data</param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException">thrown when parent 1 or parent 2 isn't found</exception>
+    /// <exception cref="RelationException">thrown when required relation types not found in database.</exception>
 
     public async Task<Dinosaur> CreateChildrenForDinosaur(DinoChildrenDto childrenData)
     {
@@ -357,7 +449,7 @@ public class DinosaurService(
         
         if (parentRelationType == null || offspringRelationType == null)
         {
-            throw new Exception("Required relation types not found in database.");
+            throw new RelationException("Required relation types not found in database.");
         }
 
         var child = new Dinosaur()
@@ -371,11 +463,6 @@ public class DinosaurService(
         };
 
         // inherit mutations from parents with calculated chance
-        
-        var allMutations = await context.NestingMutations
-            .Where(nm => nm.NestingId == nesting.NestingId)
-            .ToListAsync();
-        
         var parentMutationCodes = parent1.DinoMutations
             .Select(m => m.MutationCode)
             .Union(parent2.DinoMutations.Select(m => m.MutationCode))

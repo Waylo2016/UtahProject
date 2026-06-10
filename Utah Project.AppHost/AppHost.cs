@@ -1,5 +1,4 @@
-using Aspire.Hosting;
-using Aspire.Hosting.JavaScript;
+
 using Projects;
 
 namespace Utah_Project.AppHost;
@@ -10,19 +9,20 @@ public class Program
     {
         IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-        IResourceBuilder<SqlServerServerResource> sql = builder.AddSqlServer("SQL")
+        var sql = builder.AddPostgres("SQL")
             .WithLifetime(ContainerLifetime.Persistent)
             .WithContainerName("UtahSQL")
             .WithHostPort(62617)
-            .WithDataBindMount("..Data/sql_data");
+            .WithDataBindMount("..Data/sql_data")
+            .WithPgAdmin();
             
-        IResourceBuilder<SqlServerDatabaseResource> db = sql.AddDatabase("UtahDB");
+        var db = sql.AddDatabase("UtahDB");
         
 
-        IResourceBuilder<ProjectResource> api = builder.AddProject<Utah_Project_API>("api")
-            .WaitFor(db)
-            .WithReference(db);
-
+        var api = builder.AddProject<Utah_Project_API>("api")
+            .WithReference(db)
+            .WaitFor(db);
+        
         builder.Build().Run();
     }
 }

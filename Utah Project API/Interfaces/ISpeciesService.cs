@@ -20,21 +20,21 @@ public interface ISpeciesService
     /// <param name="speciesId">the numerical id of the species being retrieved</param>
     /// <returns>the species with the specified id</returns>
     Task<Species> GetSpeciesById(int speciesId);
-    
+
     /// <summary>
     /// Create a new species.
     /// </summary>
-    /// <param name="speciesData">data used to create a species</param>
+    /// <param name="speciesData">the data used to create a species, contains species name and description</param>
     /// <returns>The created species.</returns>
-    Task<Species> CreateSpecies(int speciesId, string speciesName);
-    
+    Task<Species> CreateSpecies(CreateSpeciesDTO speciesData);
+
     /// <summary>
     /// updates an existing species.
     /// </summary>
     /// <param name="speciesId">numerical id of a species</param>
-    /// <param name="speciesData">data used to update a species</param>
+    /// <param name="speciesData">data used to update a species, this is for a JSON-Patch</param>
     /// <returns>the updated species</returns>
-    Task<Species> UpdateSpecies(int speciesId, PatchDto speciesData);
+    Task<Species> UpdateSpecies(int speciesId, JsonPatchDocument<SpeciesDTO> speciesData);
     
     /// <summary>
     /// deletes an existing species.

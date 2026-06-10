@@ -77,7 +77,6 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(Dinosaur), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<Dinosaur>> CreateDinosaur([FromBody] DinosaurDto dinosaurData)
     {
         try
@@ -92,10 +91,6 @@ public class DinosaurController(IDinosaurService dinosaurServiceService) : Contr
         catch (NotFoundException e)
         {
             return NotFound(e.Message);
-        }
-        catch (Exception e)
-        {
-            return Conflict(e.Message);
         }
     }
 

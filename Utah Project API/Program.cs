@@ -5,8 +5,6 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Aspire.Microsoft.EntityFrameworkCore.SqlServer;
-using k8s.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
@@ -47,10 +45,13 @@ public class Program
         builder.AddServiceDefaults();
         
         
-        // Add EFCore with SQL server
+        // Add EFCore with Postgres
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("UtahDB")
-            ?? throw new InvalidOperationException("Connection string 'UtahDB' not found.")));
+            options.UseNpgsql(
+                builder.Configuration.GetConnectionString("UtahDB")
+                ?? throw new InvalidOperationException("Connection string 'UtahDB' not found.")
+            )
+        );
         
         // Add services to the container.
         builder.Services.AddAuthorization();

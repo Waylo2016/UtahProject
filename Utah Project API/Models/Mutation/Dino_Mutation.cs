@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Utah_Project_API.Models;
@@ -14,6 +15,4 @@ public class Dino_Mutation
     
     [JsonIgnore]
     public Mutation_Lib Mutation { get; set; }
-    
-    public string MutationName { get; set; }
 }

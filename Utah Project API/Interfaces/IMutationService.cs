@@ -13,34 +13,34 @@ public interface IMutationService
     /// gets all species.
     /// </summary>
     /// <returns></returns>
-    Task<List<Species>> GetMutations();
+    Task<List<Mutation_Lib>> GetMutations();
     
     /// <summary>
     /// gets a specific species by its numerical id.
     /// </summary>
     /// <param name="mutationId">the numerical id of the species being retrieved</param>
     /// <returns>the species with the specified id</returns>
-    Task<Species> GetMutationById(int mutationId);
+    Task<Mutation_Lib> GetMutationById(int mutationId);
         
     /// <summary>
     /// creates a new species
     /// </summary>
     /// <param name="mutationDto"></param>
     /// <returns>returns the newly created species</returns>
-     Task<Species> CreateMutation(CreateMutationDto mutationDto);
+     Task<Mutation_Lib> CreateMutation(CreateMutationDto mutationDto);
         
     /// <summary>
-    /// updates an existing species.
+    /// updates an existing mutation.
     /// </summary>
-    /// <param name="speciesId"></param>
-    /// <param name="speciesData"></param>
+    /// <param name="mutation"></param>
+    /// <param name="patchDoc"></param>
     /// <returns>updates a species</returns>
-     Task<Species> UpdateMutation(int speciesId, JsonPatchDocument<UpdateMutationsDto> patchDoc);
+     Task<Mutation_Lib> UpdateMutation(int mutation, JsonPatchDocument<UpdateMutationsDto> patchDoc);
         
     /// <summary>
-    /// deletes an existing species.
+    /// deletes an existing mutation.
     /// </summary>
-    /// <param name="speciesId"></param>
+    /// <param name="mutationId"></param>
     /// <returns>deletes a species</returns>
-    Task<Species> DeleteMutation(int speciesId);
+    Task<Mutation_Lib> DeleteMutation(int mutationId);
 }

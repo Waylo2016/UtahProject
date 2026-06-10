@@ -1,13 +1,11 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.1.1">
+<Project Sdk="Aspire.AppHost.Sdk/13.4.3">
 
   <ItemGroup>
     <ProjectReference Include="..\Utah Project API\Utah Project API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.1.1" />
-    <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.1.1" />
-    <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.1.1" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />

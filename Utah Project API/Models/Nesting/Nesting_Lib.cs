@@ -10,7 +10,6 @@ public class Nesting_Lib
     
     public string NestingDescription { get; set; }
     
-    [Column(TypeName = "nvarchar(max)")]
     public string ExtendedDesciption { get; set; }
 
     public int? Parent1Code { get; set; }
