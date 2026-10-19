@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="UtahProject.API/UtahProject.Api.csproj" />
+  <Project Path="UtahProject.AppHost/UtahProject.AppHost.csproj" />
+  <Project Path="UtahProject.ServiceDefaults/UtahProject.ServiceDefaults.csproj" />
+</Solution>
