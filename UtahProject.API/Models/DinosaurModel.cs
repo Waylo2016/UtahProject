@@ -1,4 +1,4 @@
-namespace UtahProject.Api.Data.Models;
+namespace UtahProject.Api.Models;
 
 public class DinosaurModel
 {

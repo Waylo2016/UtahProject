@@ -1,4 +1,4 @@
-namespace UtahProject.Api.Data.Enums;
+namespace UtahProject.Api.Enums;
 
 public enum LivingArea
 {
