@@ -23,6 +23,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .Property(d => d.DinoId)
             .ValueGeneratedOnAdd();
 
+        modelBuilder.Entity<DinosaurModel>()
+            .Property(d => d.SpeciesId)
+            .ValueGeneratedNever();
 
         // User model configuring
         modelBuilder.Entity<UserModel>()
@@ -44,5 +47,14 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<LoreModel>()
             .Property(l => l.LoreId)
             .ValueGeneratedOnAdd();
+        
+        // Relationships
+        
+        // Species 1 - * Dinosaur
+        modelBuilder.Entity<SpeciesModel>()
+            .HasMany(s => s.Dinosaurs)
+            .WithOne(d => d.Species)
+            .HasForeignKey(d => d.SpeciesId)
+            .IsRequired();
     }
 }

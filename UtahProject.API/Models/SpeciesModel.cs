@@ -1,6 +1,6 @@
-
-
 using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using UtahProject.Api.Enums;
 
 namespace UtahProject.Api.Models;
@@ -14,4 +14,7 @@ public class SpeciesModel
     public Diet Diet { get; set; }
 
     public Diet LivingArea { get; set; }
+    
+    [JsonIgnore]
+    public ICollection<DinosaurModel> Dinosaurs { get; } = new List<DinosaurModel>();
 }
