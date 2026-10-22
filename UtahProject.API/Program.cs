@@ -78,7 +78,7 @@ namespace UtahProject.Api
             }
 
             app.UseHttpsRedirection();
-            
+
             app.Run();
         }
     }
