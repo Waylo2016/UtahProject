@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi;
 using UtahProject.Api.Data;
 using UtahProject.Api.Models;
 using UtahProject.ServiceDefaults;
@@ -42,10 +43,13 @@ namespace UtahProject.Api
                     options.GroupNameFormat = "'v'VVV"; // format: 'v'major[.minor][.patch]
                     options.SubstituteApiVersionInUrl = true;
                 }).AddMvc();
-            
+
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddIdentity<UserModel, IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddSwaggerGen(options =>
             {
 
@@ -71,8 +75,6 @@ namespace UtahProject.Api
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-            builder.Services.AddOpenApi();
-            builder.Services.AddIdentity<UserModel, IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 
