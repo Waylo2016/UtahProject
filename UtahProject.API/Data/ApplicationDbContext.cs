@@ -1,10 +1,12 @@
+using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UtahProject.Api.Models;
 
 namespace UtahProject.Api.Data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :IdentityDbContext<UserModel>(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :IdentityDbContext<UserModel, IdentityRole<Guid>, Guid>(options)
 {
     // Configure the database context
     public DbSet<UserModel> Users { get; set; }
@@ -25,11 +27,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         modelBuilder.Entity<DinosaurModel>()
             .Property(d => d.SpeciesId)
-            .ValueGeneratedNever();
-
-        // User model configuring
-        modelBuilder.Entity<UserModel>()
-            .Property(u => u.DinoOwner)
             .ValueGeneratedNever();
         
         // Species model configuring
@@ -56,5 +53,20 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .WithOne(d => d.Species)
             .HasForeignKey(d => d.SpeciesId)
             .IsRequired();
+        
+        // Dinosaur 1 - * Lore
+        modelBuilder.Entity<DinosaurModel>()
+            .HasMany(d => d.Lore)
+            .WithOne(l => l.Dinosaur)
+            .HasForeignKey(l => l.DinoId)
+            .IsRequired();
+        
+        // User 1 - * Dinosaur
+        modelBuilder.Entity<UserModel>()
+            .HasMany(u => u.Dinosaurs)
+            .WithOne(d => d.Owner)
+            .HasForeignKey(d => d.OwnedBy)
+            .IsRequired();
+
     }
 }

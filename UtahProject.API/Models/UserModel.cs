@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 
 namespace UtahProject.Api.Models;
 
-public class UserModel : IdentityUser
+public class UserModel : IdentityUser<Guid>
 {
-    public Guid DinoOwner { get; set; }
+    [JsonIgnore]
+    public ICollection<DinosaurModel> Dinosaurs { get; set; }
 }
