@@ -23,7 +23,6 @@ namespace UtahProject.Api
 
             // Add services to the container.
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
 
             builder.Services.AddApiVersioning(options =>
                     {
@@ -37,15 +36,17 @@ namespace UtahProject.Api
                 {
                     options.GroupNameFormat = "'v'VVV"; // format: 'v'major[.minor][.patch]
                     options.SubstituteApiVersionInUrl = true;
-                });
+                }).AddMvc();
+            
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => {
-                
+            builder.Services.AddSwaggerGen(options =>
+            {
+
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Utah Project API", 
+                    Title = "Utah Project API",
                     Version = "v1",
                     Description = "The API for the Utah Project Roleplay website",
                     Contact = new OpenApiContact
@@ -78,6 +79,7 @@ namespace UtahProject.Api
             }
 
             app.UseHttpsRedirection();
+            app.MapControllers();
 
             app.Run();
         }
