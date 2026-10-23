@@ -1,0 +1,47 @@
+@page "/"
+@layout EmptyLayout
+@rendermode InteractiveServer
+
+<MudGrid>
+    <MudItem Class="d-flex justify-center" xs="12" >
+        <MudPaper Style="width: 300px" Class="pa-5">
+            <MudText Typo="Typo.h6" Align="Align.Center">Log in to your account</MudText>
+            
+            <MudForm @ref="_form" @bind-IsValid="_success" Class="mt-4">
+                <MudTextField T="string" Label="Username" Required="true" HelperText="get yourself a unique username twin"/>
+                <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
+                              Required="true" Adornment="Adornment.End" 
+                              AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
+                              AdornmentAriaLabel="Show Password" HelperText="pls enter a strong password twin"/>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" Style="width: 40%" Class="align-self-center mt-5">Log in</MudButton>
+                
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    private MudForm _form;
+    private bool _success;
+    
+    private bool _isShow;
+    private InputType PasswordInput = InputType.Password;
+    private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    private void TogglePasswordVisibility()
+    {
+        if (_isShow)
+        {
+            _isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            _isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+}
