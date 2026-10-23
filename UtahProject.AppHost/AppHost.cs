@@ -21,6 +21,9 @@ public class AppHost
             .WithExternalHttpEndpoints()
             .WithReference(utahDb);
 
+        var blazor = builder.AddProject<Projects.UtahProject_Blazor>("utahproject-blazor")
+            .WithExternalHttpEndpoints();
+
         var apiMigrations = api.AddEFMigrations("api-migrations")
             .RunDatabaseUpdateOnStart();
 
