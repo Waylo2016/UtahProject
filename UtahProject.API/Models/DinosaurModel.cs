@@ -14,7 +14,7 @@ public class DinosaurModel
     [JsonIgnore]
     public SpeciesModel Species { get; set; } = null!;
 
-    [JsonIgnore] 
+    [JsonIgnore]
     public ICollection<LoreModel> Lore { get; } = new List<LoreModel>();
 
     [JsonIgnore]

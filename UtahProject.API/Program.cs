@@ -17,7 +17,7 @@ namespace UtahProject.Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.AddServiceDefaults();
-            
+
             builder.AddNpgsqlDbContext<ApplicationDbContext>(connectionName: "UtahDb");
 
             // Add services to the container.

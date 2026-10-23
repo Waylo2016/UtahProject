@@ -14,7 +14,7 @@ public class SpeciesModel
     public Diet Diet { get; set; }
 
     public Diet LivingArea { get; set; }
-    
+
     [JsonIgnore]
     public ICollection<DinosaurModel> Dinosaurs { get; } = new List<DinosaurModel>();
 }

@@ -9,7 +9,7 @@ public class AppHost
     {
         var builder = DistributedApplication.CreateBuilder(args);
         var pgUser = builder.AddParameter("pg-user", secret: true);
-        
+
         var postgres = builder.AddPostgres("postgres", userName: pgUser, port: 5432)
             .WithDataVolume()
             .WithLifetime(ContainerLifetime.Persistent)
@@ -23,7 +23,7 @@ public class AppHost
 
         var apiMigrations = api.AddEFMigrations("api-migrations")
             .RunDatabaseUpdateOnStart();
-        
+
         api.WaitForCompletion(apiMigrations);
 
         builder.Build()
