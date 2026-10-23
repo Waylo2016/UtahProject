@@ -4,9 +4,12 @@ using System.Linq;
 using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi;
+using UtahProject.Api.Data;
+using UtahProject.Api.Models;
+using UtahProject.ServiceDefaults;
 
 namespace UtahProject.Api
 {
@@ -20,6 +23,8 @@ namespace UtahProject.Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.AddServiceDefaults();
+
+            builder.AddNpgsqlDbContext<ApplicationDbContext>(connectionName: "UtahDb");
 
             // Add services to the container.
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -66,6 +71,8 @@ namespace UtahProject.Api
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+            builder.Services.AddOpenApi();
+            builder.Services.AddIdentity<UserModel, IdentityRole<Guid>>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 
