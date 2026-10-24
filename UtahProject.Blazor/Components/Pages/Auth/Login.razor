@@ -16,9 +16,16 @@
                                   AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
                                   AdornmentAriaLabel="Show Password" HelperText="pls enter ur strong password twin" 
                                   @bind-Value="@info.Password" For="@(() => info.Password)"/>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" 
-                               Style="width: 40%" ButtonType="ButtonType.Submit"
-                               Class="align-self-center mt-5">Log in</MudButton>
+                <MudGrid Class="pt-3">
+                    <MudItem xs="6">
+                        <MudText><a href="/register">Don't have an account?</a></MudText>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" 
+                                   Style="width: 100%" ButtonType="ButtonType.Submit"
+                                   Class="mt-3">Login</MudButton>
+                    </MudItem>
+                </MudGrid>
             </MudPaper>
         </MudItem>
     </MudGrid>
