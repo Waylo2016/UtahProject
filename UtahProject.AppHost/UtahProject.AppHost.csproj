@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\UtahProject.API\UtahProject.Api.csproj" />
+      <ProjectReference Include="..\UtahProject.Blazor\UtahProject.Blazor.csproj" />
     </ItemGroup>
 
     <ItemGroup>
