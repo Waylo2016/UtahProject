@@ -1,30 +1,35 @@
-@page "/"
+@page "/login"
+@using System.ComponentModel.DataAnnotations
 @layout EmptyLayout
 @rendermode InteractiveServer
 
-<MudGrid>
-    <MudItem Class="d-flex justify-center" xs="12" >
-        <MudPaper Style="width: 300px" Class="pa-5">
-            <MudText Typo="Typo.h6" Align="Align.Center">Log in to your account</MudText>
-            
-            <MudForm @ref="_form" @bind-IsValid="_success" Class="mt-4">
-                <MudTextField T="string" Label="Username" Required="true" HelperText="get yourself a unique username twin"/>
-                <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
-                              Required="true" Adornment="Adornment.End" 
-                              AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
-                              AdornmentAriaLabel="Show Password" HelperText="pls enter a strong password twin"/>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" Style="width: 40%" Class="align-self-center mt-5">Log in</MudButton>
+<EditForm Model="info" OnValidSubmit="LoginAsync">
+    <MudGrid>
+        <MudItem Class="d-flex justify-center" xs="12" >
+            <MudPaper Style="width: 300px" Class="pa-5">
+                <MudText Typo="Typo.h6" Align="Align.Center">Log in to your account</MudText>
                 
-            </MudForm>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+                    <MudTextField T="string" Label="Username" Required="true" 
+                                  HelperText="Log in with that unique username twin" @bind-Value="@info.Username"/>
+                    <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
+                                  Required="true" Adornment="Adornment.End" 
+                                  AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
+                                  AdornmentAriaLabel="Show Password" HelperText="pls enter ur strong password twin" 
+                                  @bind-Value="@info.Password" For="@(() => info.Password)"/>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" 
+                               Style="width: 40%" ButtonType="ButtonType.Submit"
+                               Class="align-self-center mt-5">Log in</MudButton>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
 
 
 @code {
-    private MudForm _form;
-    private bool _success;
+    private AccountInfo info = new();
     
+
     private bool _isShow;
     private InputType PasswordInput = InputType.Password;
     private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -43,5 +48,24 @@
             PasswordInputIcon = Icons.Material.Filled.Visibility;
             PasswordInput = InputType.Text;
         }
+    }
+
+    private async Task LoginAsync()
+    {
+
+        Console.WriteLine($"username: {info.Username}");
+        Console.WriteLine($"password: {info.Password}");
+        
+    }
+
+    private class AccountInfo
+    {
+        [Required]
+        [StringLength(12, ErrorMessage = "Username must be between 1 and 12 characters.")]
+        public string Username { get; set; }
+        
+        [Required]
+        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public string Password { get; set; }
     }
 }
