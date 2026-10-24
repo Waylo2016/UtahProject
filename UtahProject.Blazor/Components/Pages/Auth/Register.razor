@@ -1,0 +1,83 @@
+@page "/register"
+@using System.ComponentModel.DataAnnotations
+@layout EmptyLayout
+@rendermode InteractiveServer
+
+<EditForm Model="info" OnValidSubmit="LoginAsync">
+    <MudGrid>
+        <MudItem Class="d-flex justify-center" xs="12" >
+            <MudPaper Style="width: 300px" Class="pa-5">
+                <MudText Typo="Typo.h6" Align="Align.Center">Register your account</MudText>
+                
+                <MudTextField T="string" Label="Username" Required="true" 
+                              HelperText="give us that that unique username twin" @bind-Value="@info.Username"/>
+                <MudTextField T="string" Label="Email" Required="true" 
+                              HelperText="give us that email twin" @bind-Value="@info.Email"/>
+                <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
+                              Required="true" Adornment="Adornment.End" 
+                              AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
+                              AdornmentAriaLabel="Show Password" HelperText="pls enter ur strong password twin" 
+                              @bind-Value="@info.Password" For="@(() => info.Password)"/>
+                <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
+                              Required="true" Adornment="Adornment.End" 
+                              AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
+                              AdornmentAriaLabel="Show Password" HelperText="pls re-enter ur strong password twin" 
+                              @bind-Value="@info.Password2" For="@(() => info.Password2)"/>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" 
+                               Style="width: 40%" ButtonType="ButtonType.Submit"
+                               Class="mt-5">Register</MudButton>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+
+
+@code {
+    private AccountInfo info = new();
+    
+
+    private bool _isShow;
+    private InputType PasswordInput = InputType.Password;
+    private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    private void TogglePasswordVisibility()
+    {
+        if (_isShow)
+        {
+            _isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            _isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+    private async Task LoginAsync()
+    {
+
+        Console.WriteLine($"username: {info.Username}");
+        Console.WriteLine($"email: {info.Email}");
+        Console.WriteLine($"password: {info.Password}");
+        
+    }
+
+    private class AccountInfo
+    {
+        [StringLength(12, ErrorMessage = "Username must be between 1 and 12 characters.")]
+        public string Username { get; set; } = "";
+        
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string Email { get; set; } = "";
+
+        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public string Password { get; set; } = "";
+
+        [Compare(nameof(Password), ErrorMessage = "Passwords do not match.")]
+        public string Password2 { get; set; } = "";
+    }
+}
