@@ -60,12 +60,10 @@
 
     private class AccountInfo
     {
-        [Required]
         [StringLength(12, ErrorMessage = "Username must be between 1 and 12 characters.")]
-        public string Username { get; set; }
-        
-        [Required]
+        public string Username { get; set; } = "";
+
         [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
     }
 }
