@@ -5,8 +5,8 @@
 
 <EditForm Model="info" OnValidSubmit="LoginAsync">
     <MudGrid>
-        <MudItem Class="d-flex justify-center" xs="12" >
-            <MudPaper Style="width: 300px" Class="pa-5">
+        <MudItem Class="d-flex justify-center" xs="12">
+            <MudPaper Style="width: 25%" Class="pa-5">
                 <MudText Typo="Typo.h6" Align="Align.Center">Register your account</MudText>
                 
                 <MudTextField T="string" Label="Username" Required="true" 
@@ -23,7 +23,9 @@
                               AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
                               AdornmentAriaLabel="Show Password" HelperText="pls re-enter ur strong password twin" 
                               @bind-Value="@info.Password2" For="@(() => info.Password2)"/>
-                <MudGrid Class="pt-3">
+                <MudCheckBox T="bool" Label="I accept the terms and conditions" Class="pt-3"
+                             Required="true"></MudCheckBox>
+                <MudGrid Class="pt-4">
                     <MudItem xs="6">
                         <MudText><a href="/login">Already have an account?</a></MudText>
                     </MudItem>

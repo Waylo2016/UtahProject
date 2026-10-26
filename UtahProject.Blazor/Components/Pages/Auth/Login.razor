@@ -11,11 +11,12 @@
                 
                     <MudTextField T="string" Label="Username" Required="true" 
                                   HelperText="Log in with that unique username twin" @bind-Value="@info.Username"/>
-                    <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
-                                  Required="true" Adornment="Adornment.End" 
-                                  AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
-                                  AdornmentAriaLabel="Show Password" HelperText="pls enter ur strong password twin" 
-                                  @bind-Value="@info.Password" For="@(() => info.Password)"/>
+                <MudTextField T="string" Label="Password" InputType="@PasswordInput" 
+                              Required="true" Adornment="Adornment.End" 
+                              AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="TogglePasswordVisibility" 
+                              AdornmentAriaLabel="Show Password" HelperText="pls enter ur strong password twin" 
+                              @bind-Value="@info.Password" For="@(() => info.Password)"/>
+                <MudCheckBox T="bool" Label="Remember me"></MudCheckBox>
                 <MudGrid Class="pt-3">
                     <MudItem xs="6">
                         <MudText><a href="/register">Don't have an account?</a></MudText>
