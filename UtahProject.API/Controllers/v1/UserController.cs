@@ -8,7 +8,7 @@ namespace UtahProject.Api.Controllers.v1;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion("0.1")]
 [Produces("application/json")]
 public class UserController(ApplicationDbContext context,
     UserManager<UserModel> userManager,
