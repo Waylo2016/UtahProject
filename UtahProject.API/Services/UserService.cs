@@ -20,10 +20,9 @@ public class UserService(
 {
     public async Task<ActionResult<GetUserDto>> registerUser(CreateUserDto createUserDto)
     {
-        var createdUser = new GetUserDto();
         UserModel user = new()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Empty,
             UserName = createUserDto.UserName,
             Email = createUserDto.Email,
             Dinosaurs = null
@@ -35,8 +34,8 @@ public class UserService(
             throw new Exception("User already exists");
         }
         
-
-        return createdUser;
+        
+        return null;
     }
 
    
