@@ -8,5 +8,5 @@ namespace UtahProject.Api.Models;
 public class UserModel : IdentityUser<Guid>
 {
     [JsonIgnore]
-    public required ICollection<DinosaurModel> Dinosaurs { get; set; }
+    public ICollection<DinosaurModel>? Dinosaurs { get; set; }
 }

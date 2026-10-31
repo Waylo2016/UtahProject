@@ -10,7 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
 using UtahProject.Api.Data;
+using UtahProject.Api.Interfaces;
 using UtahProject.Api.Models;
+using UtahProject.Api.Services;
 using UtahProject.ServiceDefaults;
 
 namespace UtahProject.Api
@@ -28,6 +30,10 @@ namespace UtahProject.Api
 
             builder.AddNpgsqlDbContext<ApplicationDbContext>(connectionName: "UtahDb");
 
+            // UtahProject - specific interfaces
+            builder.Services.AddScoped<IUserService, UserService>();
+            
+            
             // Add services to the container.
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
