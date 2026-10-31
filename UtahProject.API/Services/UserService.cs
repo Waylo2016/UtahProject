@@ -1,8 +1,6 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UtahProject.Api.Data;
 using UtahProject.Api.DTO.User;
@@ -16,9 +14,9 @@ public class UserService(
     UserManager<UserModel> userManager,
     SignInManager<UserModel> signInManager,
     ILogger<UserService> logger
-    ) : IUserService
+) : IUserService
 {
-    public async Task<ActionResult<GetUserDto>> registerUser(CreateUserDto createUserDto)
+    public async Task<GetUserDto> registerUser(CreateUserDto createUserDto)
     {
         UserModel user = new()
         {
@@ -33,10 +31,30 @@ public class UserService(
         {
             throw new Exception("User already exists");
         }
+        var result = await userManager.CreateAsync(user, createUserDto.Password);
+
+        if (!result.Succeeded)
+        {
+            throw new Exception("Registration failed");
+        }
         
+        await VerifyUser(user);
         
-        return null;
+        var createdUser = new GetUserDto()
+        {
+            Name = user.UserName,
+            Email = user.Email
+        };
+
+        return createdUser;
     }
 
-   
+
+    // will change in the future, is covered by PU-14
+    private async Task<UserModel> VerifyUser(UserModel user)
+    {
+        user.EmailConfirmed = true;
+        await userManager.UpdateAsync(user);
+        return user;
+    }
 }

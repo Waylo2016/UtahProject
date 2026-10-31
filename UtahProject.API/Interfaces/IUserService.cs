@@ -6,5 +6,5 @@ namespace UtahProject.Api.Interfaces;
 
 public interface IUserService
 {
-    Task<ActionResult<GetUserDto>> registerUser(CreateUserDto createUserDto);
+    Task<GetUserDto> registerUser(CreateUserDto createUserDto);
 }
