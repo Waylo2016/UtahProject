@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -20,10 +21,8 @@ public class UserService(
     {
         UserModel user = new()
         {
-            Id = Guid.Empty,
             UserName = createUserDto.UserName,
-            Email = createUserDto.Email,
-            Dinosaurs = null
+            Email = createUserDto.Email
         };       
         
         var existingUser = await userManager.FindByNameAsync(createUserDto.UserName);
@@ -31,6 +30,7 @@ public class UserService(
         {
             throw new Exception("User already exists");
         }
+        
         var result = await userManager.CreateAsync(user, createUserDto.Password);
 
         if (!result.Succeeded)
