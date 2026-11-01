@@ -3,9 +3,12 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
@@ -52,7 +55,12 @@ namespace UtahProject.Api
                 }).AddMvc();
 
             builder.Services.AddControllers();
-            builder.Services.AddAuthentication();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("JwtSettings", options))
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("CookieSettings", options));
+            
             builder.Services.AddAuthorization();
 
             builder.Services.AddEndpointsApiExplorer();
