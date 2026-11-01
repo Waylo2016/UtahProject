@@ -23,23 +23,23 @@ public class UserService(
         {
             UserName = createUserDto.UserName,
             Email = createUserDto.Email
-        };       
-        
+        };
+
         var existingUser = await userManager.FindByNameAsync(createUserDto.UserName);
         if (existingUser != null)
         {
             throw new Exception("User already exists");
         }
-        
+
         var result = await userManager.CreateAsync(user, createUserDto.Password);
 
         if (!result.Succeeded)
         {
             throw new Exception("Registration failed");
         }
-        
+
         await VerifyUser(user);
-        
+
         var createdUser = new GetUserDto()
         {
             Name = user.UserName,

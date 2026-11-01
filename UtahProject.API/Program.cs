@@ -35,15 +35,14 @@ namespace UtahProject.Api
 
             // UtahProject - specific interfaces
             builder.Services.AddScoped<IUserService, UserService>();
-            
-            
+
+
             // Add services to the container.
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
             builder.Services.AddApiVersioning(options =>
                     {
                         options.DefaultApiVersion = apiVersion;
-                        options.AssumeDefaultVersionWhenUnspecified = true;
                         options.ReportApiVersions = true;
                         options.ApiVersionReader = new UrlSegmentApiVersionReader();
                     }
@@ -60,7 +59,7 @@ namespace UtahProject.Api
                     options => builder.Configuration.Bind("JwtSettings", options))
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options => builder.Configuration.Bind("CookieSettings", options));
-            
+
             builder.Services.AddAuthorization();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -92,7 +91,7 @@ namespace UtahProject.Api
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-            
+
             // service configuration
 
             builder.Services.AddIdentityCore<UserModel>(options =>
@@ -133,7 +132,7 @@ namespace UtahProject.Api
                 options.ExpireTimeSpan = TimeSpan.FromDays(14);
                 options.SlidingExpiration = true;
             });
-                
+
 
             var app = builder.Build();
 

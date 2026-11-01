@@ -18,7 +18,7 @@ namespace UtahProject.Api.Controllers.v1;
 public class UserController(IUserService userService
     ) : ControllerBase
 {
-    
+
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<ActionResult<GetUserDto>> registerUser([FromBody] CreateUserDto createUserDto)
@@ -36,7 +36,7 @@ public class UserController(IUserService userService
             Console.WriteLine(e);
             throw;
         }
-        
+
         return Ok(user);
     }
 
