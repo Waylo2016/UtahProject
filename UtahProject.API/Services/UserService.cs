@@ -11,10 +11,14 @@ using UtahProject.Api.Models;
 namespace UtahProject.Api.Services;
 
 public class UserService(
+#pragma warning disable CS9113 // Parameter is unread.
     ApplicationDbContext context,
+#pragma warning restore CS9113 // Parameter is unread.
     UserManager<UserModel> userManager,
+#pragma warning disable CS9113 // Parameter is unread.
     SignInManager<UserModel> signInManager,
     ILogger<UserService> logger
+#pragma warning restore CS9113 // Parameter is unread.
 ) : IUserService
 {
     public async Task<GetUserDto> registerUser(CreateUserDto createUserDto)
