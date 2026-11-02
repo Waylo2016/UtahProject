@@ -1,15 +1,21 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
 using UtahProject.Api.Data;
+using UtahProject.Api.Interfaces;
 using UtahProject.Api.Models;
+using UtahProject.Api.Services;
 using UtahProject.ServiceDefaults;
 
 namespace UtahProject.Api
@@ -27,13 +33,16 @@ namespace UtahProject.Api
 
             builder.AddNpgsqlDbContext<ApplicationDbContext>(connectionName: "UtahDb");
 
+            // UtahProject - specific interfaces
+            builder.Services.AddScoped<IUserService, UserService>();
+
+
             // Add services to the container.
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
             builder.Services.AddApiVersioning(options =>
                     {
                         options.DefaultApiVersion = apiVersion;
-                        options.AssumeDefaultVersionWhenUnspecified = true;
                         options.ReportApiVersions = true;
                         options.ApiVersionReader = new UrlSegmentApiVersionReader();
                     }
@@ -45,6 +54,13 @@ namespace UtahProject.Api
                 }).AddMvc();
 
             builder.Services.AddControllers();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("JwtSettings", options))
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("CookieSettings", options));
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddEndpointsApiExplorer();
 
@@ -76,9 +92,49 @@ namespace UtahProject.Api
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
-            var app = builder.Build();
+            // service configuration
 
-            app.MapDefaultEndpoints();
+            builder.Services.AddIdentityCore<UserModel>(options =>
+                {
+                    // password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 8;
+
+                    // lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    // user settings
+                    options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.@";
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager()
+                .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+
+                };
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
+                options.SlidingExpiration = true;
+            });
+
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -86,6 +142,9 @@ namespace UtahProject.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
             app.MapControllers();
